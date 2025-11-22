@@ -6,7 +6,6 @@ import java.util.List;
 import rsc.Core.Templates.Repository.GenericRepository;
 import rsc.Data.Response;
 import rsc.Services.ConfigServices.ModuloService;
-import rsc.Utility.TypeUtils;
 
 public final class ModuloRepository extends GenericRepository<Modulo, Object> implements ModuloService {
 
@@ -16,7 +15,7 @@ public final class ModuloRepository extends GenericRepository<Modulo, Object> im
 
     @Override
     public Response<List<ModuloEstados>> estadosList() {
-        return send(null, TypeUtils.of(ModuloEstados.class));
+        return send(null, ModuloEstados.class);
     }
 
 }

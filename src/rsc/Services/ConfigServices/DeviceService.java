@@ -7,6 +7,7 @@ import java.util.List;
 import rsc.Core.Templates.Service.GenericService;
 import rsc.Data.Response;
 
+
 public interface DeviceService extends GenericService<Device, Object> {
 
     Response<List<DeviceEstado>> estadosList();

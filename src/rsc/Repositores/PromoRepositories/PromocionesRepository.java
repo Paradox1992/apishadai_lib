@@ -7,7 +7,6 @@ import java.util.List;
 import rsc.Core.Templates.Repository.GenericRepository;
 import rsc.Data.Response;
 import rsc.Services.PromoServices.PromocionesService;
-import rsc.Utility.TypeUtils;
 
 public final class PromocionesRepository extends GenericRepository<Promociones, Object> implements PromocionesService {
 
@@ -17,16 +16,16 @@ public final class PromocionesRepository extends GenericRepository<Promociones, 
 
     @Override
     public Response<Promociones> getActive() {
-        return send(null, TypeUtils.of(Promociones.class));
+        return send(null, Promociones.class);
     }
 
     @Override
     public Response<List<Promociones>> filer(FilterModel filter) {
-        return send(filter, TypeUtils.of(Promociones.class));
+        return send(filter, Promociones.class);
     }
 
     @Override
     public Response<List<PromoEstado>> estadosList() {
-        return send(null, TypeUtils.of(PromoEstado.class));
+        return send(null, PromoEstado.class);
     }
 }

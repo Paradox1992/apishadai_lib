@@ -9,7 +9,6 @@ import java.util.List;
 import rsc.Core.Templates.Repository.GenericRepository;
 import rsc.Data.Response;
 import rsc.Services.ConfigServices.PermisosService;
-import rsc.Utility.TypeUtils;
 
 public final class PermisosRepository extends GenericRepository<Permisos, Object> implements PermisosService {
 
@@ -19,27 +18,27 @@ public final class PermisosRepository extends GenericRepository<Permisos, Object
 
     @Override
     public Response<List<Permisos>> listbyUser(Object id) {
-        return sendWithParam(id, TypeUtils.of(Permisos.class));
+        return sendWithParam(id, Permisos.class);
     }
 
     @Override
     public Response<List<Modulo>> listModulos() {
-        return send(null, TypeUtils.of(Modulo.class));
+        return send(null, Modulo.class);
     }
 
     @Override
     public Response<List<Vista>> listVistasbyModulo(Object id) {
-        return sendWithParam(id, TypeUtils.of(Vista.class));
+        return sendWithParam(id, Vista.class);
     }
 
     @Override
     public Response<List<Actionsvistas>> accionsbyVista(Object id) {
-        return sendWithParam(id, TypeUtils.of(Actionsvistas.class));
+        return sendWithParam(id, Actionsvistas.class);
     }
 
     @Override
     public Response<List<TiposTiempo>> listTipoTiempo() {
-        return send(null, TypeUtils.of(TiposTiempo.class));
+        return send(null, TiposTiempo.class);
     }
 
 }

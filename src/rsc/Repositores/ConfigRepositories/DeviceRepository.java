@@ -17,14 +17,11 @@ public final class DeviceRepository extends GenericRepository<Device, Object> im
 
     @Override
     public Response<List<DeviceEstado>> estadosList() {
-        return send(null, TypeUtils.of(DeviceEstado.class));
+        return send(null, TypeUtils.listOf(DeviceEstado.class));
     }
 
     @Override
     public Response<List<Stock>> stocksList() {
-        return send(null, TypeUtils.of(Stock.class));
+        return send(null, TypeUtils.listOf(Stock.class));
     }
-    
-    
-
 }

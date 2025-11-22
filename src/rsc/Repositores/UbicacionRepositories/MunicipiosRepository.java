@@ -5,7 +5,7 @@ import java.util.List;
 import rsc.Core.Templates.Repository.GenericRepository;
 import rsc.Data.Response;
 import rsc.Services.UbicacionServices.MunicipiosService;
-import rsc.Utility.TypeUtils;
+
 
 public final class MunicipiosRepository extends GenericRepository<Municipios, Object> implements MunicipiosService {
 
@@ -15,7 +15,7 @@ public final class MunicipiosRepository extends GenericRepository<Municipios, Ob
 
     @Override
     public Response<List<Municipios>> bydepartamento(Object departamentoId) {
-        return sendWithParam(departamentoId, TypeUtils.of(Municipios.class));
+        return sendWithParam(departamentoId, Municipios.class);
     }
 
 }

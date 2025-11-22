@@ -5,7 +5,6 @@ import com.shapi.Models.auth.Session;
 import rsc.Core.Templates.Repository.GenericRepository;
 import rsc.Data.Response;
 import rsc.Services.AuthServices.SessionService;
-import rsc.Utility.TypeUtils;
 
 public final class SessionRepository extends GenericRepository<Session, Integer> implements SessionService {
 
@@ -16,12 +15,12 @@ public final class SessionRepository extends GenericRepository<Session, Integer>
 
     @Override
     public Response<Session> login(Credentials credentials) {
-        return send(credentials, TypeUtils.of(Session.class));
+        return send(credentials, Session.class);
     }
 
     @Override
     public Response<Boolean> logouth() {
-        return send(null, TypeUtils.of(Boolean.class));
+        return send(null, Boolean.class);
     }
 
 }

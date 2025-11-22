@@ -7,10 +7,10 @@ import java.io.Serializable;
 import java.util.List;
 
 public class PagedResult<T> {
-
+    
     private List<T> data;
     private PgInfo meta;
-
+    
     @JsonCreator
     public PagedResult(
             @JsonProperty("data") List<T> data,
@@ -47,5 +47,5 @@ public class PagedResult<T> {
     public void setMeta(PgInfo meta) {
         this.meta = meta;
     }
-
+    
 }

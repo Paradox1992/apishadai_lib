@@ -19,17 +19,17 @@ public final class UserRepository extends GenericRepository<User, String>
 
     @Override
     public Response<List<User>> filter(FilterModel filter) {
-        return send(filter, TypeUtils.of(User.class));
+        return send(filter, User.class);
     }
 
     @Override
     public Response<List<Roles>> rolesList() {
-        return send(null, TypeUtils.of(Roles.class));
+        return send(null, Roles.class);
     }
 
     @Override
     public Response<List<UserEstado>> estadosList() {
-        return send(null, TypeUtils.of(UserEstado.class));
+        return send(null, UserEstado.class);
     }
 
 }

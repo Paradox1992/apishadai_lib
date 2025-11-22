@@ -8,7 +8,6 @@ import rsc.Data.Response;
 import rsc.Utility.RouteHelper;
 import rsc.Utility.TypeUtils;
 import rsc.Core.Templates.Service.GenericService;
-import rsc.Data.PagedResult;
 import rsc.Utility.ButtonRoute;
 
 public class GenericRepository<T, ID> implements GenericService<T, ID> {
@@ -26,7 +25,7 @@ public class GenericRepository<T, ID> implements GenericService<T, ID> {
         return this;
     }
 
-    private <R> Response<R> send(ButtonRoute buttonRoute, Object body, Type responseType) {
+    public <R> Response<R> send(ButtonRoute buttonRoute, Object body, Type responseType) {
         return ApiHandler.getInstance().exec().send(
                 buttonRoute.getUrl(),
                 buttonRoute.getMethod(),
@@ -36,7 +35,7 @@ public class GenericRepository<T, ID> implements GenericService<T, ID> {
         );
     }
 
-    private <R> Response<R> send(ButtonRoute buttonRoute, Object body, Class<R> responseType) {
+    public <R> Response<R> send(ButtonRoute buttonRoute, Object body, Class<R> responseType) {
         return ApiHandler.getInstance().exec().send(
                 buttonRoute.getUrl(),
                 buttonRoute.getMethod(),
@@ -55,12 +54,10 @@ public class GenericRepository<T, ID> implements GenericService<T, ID> {
                 body,
                 responseType
         );
-
     }
 
     protected <R> Response<R> sendWithParam(ID param, Type responseType) {
         var buttonRoute = RouteHelper.buildRoute(session.getAccessibleContext(), param);
-
         return ApiHandler.getInstance().exec().send(
                 buttonRoute.getUrl(),
                 buttonRoute.getMethod(),
@@ -93,10 +90,5 @@ public class GenericRepository<T, ID> implements GenericService<T, ID> {
     @Override
     public Response<List<T>> findAll() {
         return send(RouteHelper.buildRoute(session.getAccessibleContext()), null, TypeUtils.listOf(entityClass));
-    }
-
-    @Override
-    public Response<PagedResult<T>> findAllPaged() {
-        return send(RouteHelper.buildRoute(session.getAccessibleContext()), null, TypeUtils.of(PagedResult.class));
     }
 }

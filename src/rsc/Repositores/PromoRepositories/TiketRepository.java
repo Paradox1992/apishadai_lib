@@ -7,7 +7,6 @@ import java.util.List;
 import rsc.Core.Templates.Repository.GenericRepository;
 import rsc.Data.Response;
 import rsc.Services.PromoServices.TicketsService;
-import rsc.Utility.TypeUtils;
 
 public final class TiketRepository extends GenericRepository<Tikets, Object> implements TicketsService {
 
@@ -17,12 +16,12 @@ public final class TiketRepository extends GenericRepository<Tikets, Object> imp
 
     @Override
     public Response<List<Tikets>> filter(FilterModel filter) {
-        return send(filter, TypeUtils.of(Tikets.class));
+        return send(filter, Tikets.class);
     }
 
     @Override
     public Response<Base64File> generateTicket(Tikets tiket) {
-        return send(tiket, TypeUtils.of(Base64File.class));
+        return send(tiket, Base64File.class);
     }
 
 }

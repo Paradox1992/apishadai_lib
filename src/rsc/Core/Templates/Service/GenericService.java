@@ -2,7 +2,6 @@ package rsc.Core.Templates.Service;
 
 import com.shapi.Models.auth.Session;
 import java.util.List;
-import rsc.Data.PagedResult;
 
 import rsc.Data.Response;
 
@@ -20,5 +19,4 @@ public interface GenericService<T, ID> {
 
     Response<List<T>> findAll();
 
-    Response<PagedResult<T>> findAllPaged();
 }

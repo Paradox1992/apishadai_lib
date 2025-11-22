@@ -1,168 +1,135 @@
 package rsc.Core;
 
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.shapi.Models.auth.Session;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
-import org.apache.hc.core5.util.TimeValue;
-import org.apache.hc.core5.util.Timeout;
 import rsc.Data.Response;
-import rsc.Models.DeviceInfo;
-import rsc.Utility.OffsetDateTimeDeserializer;
 import rsc.Utility.UrlReader;
-
+import rsc.Models.DeviceInfo;
 import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
-import java.util.*;
-
+import java.util.List;
+import java.util.Objects;
+import org.apache.commons.io.IOUtils;
+import rsc.Utility.OffsetDateTimeDeserializer;
 import static rsc.Utility.UtilApi.UTL;
 
 public final class ApiRequest<T> implements rsc.Services.api.RequestModel {
 
-    private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder()
-            .addModule(new JavaTimeModule().addDeserializer(OffsetDateTime.class, new OffsetDateTimeDeserializer()))
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-            .build();
+    private static final ObjectMapper OBJECT_MAPPER = createConfiguredObjectMapper();
+    private static final String AUTH_PREFIX = "Bearer ";
+    private static final String APP_VERSION = "1.0.0";
+    private static final String JSON_CONTENT_TYPE = "application/json";
 
-    private static final CloseableHttpClient HTTP_CLIENT = HttpClients.custom()
-            .evictExpiredConnections()
-            .evictIdleConnections(TimeValue.ofMinutes(1))
-            .setDefaultRequestConfig(RequestConfig.custom()
-                    .setResponseTimeout(Timeout.ofSeconds(30))
-                    .setConnectionRequestTimeout(Timeout.ofSeconds(5))
-                    .build())
-            .build();
+    private static ObjectMapper createConfiguredObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        JavaTimeModule timeModule = new JavaTimeModule();
+        timeModule.addDeserializer(OffsetDateTime.class, new OffsetDateTimeDeserializer());
+        mapper.registerModule(timeModule);
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        return mapper;
+    }
 
     @Override
     public <T> Response<T> send(String route, String method, Session session, Object body, Type responseType) {
-        if (!UTL.deviceUtilsService().checkConnection()) {
-            UTL.AlertService().error(null, "Sin Conexión al Servidor!");
-            return new Response<>("Sin conexión al servidor", 0, null, null);
-        }
+        validateInputParameters(route, method);
 
-        Objects.requireNonNull(route, "Route cannot be null");
-        Objects.requireNonNull(method, "Method cannot be null");
-
-        method = validateHttpMethod(method);
-
-        try {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             DeviceInfo device = getDeviceInfo();
             ClassicHttpRequest request = buildRequest(route, method, session, body, device);
-            return executeRequest(request, responseType);
-        } catch (IOException e) {
-            logError("ApiRequest::send - Network error", e);
-            return new Response<>("Network error", 500, null, null);
-        } catch (Exception e) {
-            logError("ApiRequest::send - Internal error", e);
-            return new Response<>("Error interno en la petición", 500, null, null);
+
+            return executeRequest(httpClient, request, responseType);
+        } catch (IOException | NullPointerException e) {
+            logError("ApiRequest::send - Error during request execution", e);
+            return null;
         }
     }
 
-    private static String validateHttpMethod(String method) {
-        method = method.toUpperCase();
-        return switch (method) {
-            case "GET", "POST", "PUT", "DELETE" ->
-                method;
-            default ->
-                throw new IllegalArgumentException("Unsupported HTTP method: " + method);
-        };
+    private void validateInputParameters(String route, String method) {
+        Objects.requireNonNull(route, "Route cannot be null");
+        Objects.requireNonNull(method, "Method cannot be null");
     }
 
     private DeviceInfo getDeviceInfo() {
         var device = UTL.deviceUtilsService().getDeviceInfo();
-        return Objects.requireNonNull(device, "Device info cannot be null");
+        Objects.requireNonNull(device, "Device info cannot be null");
+        return device;
     }
 
     private ClassicHttpRequest buildRequest(String route, String method, Session session, Object body, DeviceInfo device) throws IOException {
-        URI uri = URI.create(getBaseUrl()).resolve(route);
-
         ClassicRequestBuilder requestBuilder = ClassicRequestBuilder.create(method)
-                .setUri(uri)
-                .addHeader("Accept", getJsonContentType())
+                .setUri(getBaseUrl().concat(route))
+                .addHeader("Accept", JSON_CONTENT_TYPE)
                 .addHeader("X-Device-Ip", device.getIp())
                 .addHeader("X-Device-Name", device.getName())
-                .addHeader("App-Version", getAppVersion());
+                .addHeader("App-Version", APP_VERSION);
 
         addAuthorizationHeader(requestBuilder, session);
-
-        if (body != null) {
-            String requestBody = OBJECT_MAPPER.writeValueAsString(body);
-            requestBuilder.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
-        }
+        addRequestBody(requestBuilder, body);
 
         return requestBuilder.build();
     }
 
     private void addAuthorizationHeader(ClassicRequestBuilder requestBuilder, Session session) {
         if (session != null && session.getToken() != null) {
-            requestBuilder.addHeader("Authorization", getAuthPrefix().concat(session.getToken()));
-            if (session.getAccessibleContext() != null && session.getAccessibleContext().getAccessibleName() != null) {
-                requestBuilder.addHeader("Action-Btn", session.getAccessibleContext().getAccessibleName());
-            }
+            requestBuilder.addHeader("Authorization", AUTH_PREFIX.concat(session.getToken()));
+            requestBuilder.addHeader("Action-Btn", session.getAccessibleContext().getAccessibleName());
         }
     }
 
-    private <T> Response<T> executeRequest(ClassicHttpRequest request, Type responseType) throws IOException {
-        return HTTP_CLIENT.execute(request, response -> {
-            int status = response.getCode();
-            String body = new String(response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8);
-            Response<T> parsed = parseApiResponse(body, responseType);
-            if (parsed.getCode() == 0) {
-                return new Response<>(parsed.getMessage(), status, parsed.getData(), parsed.getMeta());
-            }
-            return parsed;
+    private void addRequestBody(ClassicRequestBuilder requestBuilder, Object body) throws IOException {
+        if (body != null) {
+            String requestBody = OBJECT_MAPPER.writeValueAsString(body);
+            requestBuilder.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
+        }
+    }
+
+    private <T> Response<T> executeRequest(CloseableHttpClient httpClient, ClassicHttpRequest request, Type responseType) throws IOException {
+        return httpClient.execute(request, response -> {
+            String responseBody = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8);
+            return parseApiResponse(responseBody, responseType);
         });
     }
 
-    /**
-     * Parser que soporta: - Response<T> estándar (message, code, data, meta) -
-     * JSON plano con data tipo objeto, lista o boolean - Colección paginada con
-     * meta + data
-     */
-    @SuppressWarnings("unchecked")
     private <T> Response<T> parseApiResponse(String responseBody, Type responseType) throws IOException {
         Objects.requireNonNull(responseBody, "Response body cannot be null");
         Objects.requireNonNull(responseType, "Response type cannot be null");
 
-        // Lee el JSON como Map genérico para inspeccionar estructura
-        Map<String, Object> map = OBJECT_MAPPER.readValue(responseBody, Map.class);
+        TypeFactory typeFactory = OBJECT_MAPPER.getTypeFactory();
+        JavaType javaType = buildJavaType(typeFactory, responseType);
 
-        boolean hasStandardFields = map.containsKey("message") && map.containsKey("code") && map.containsKey("data");
+        return OBJECT_MAPPER.readValue(responseBody, javaType);
+    }
 
-        if (hasStandardFields) {
-            // Si contiene "meta", usar Response<T> con PgInfo
-            Object metaObj = map.get("meta");
-
-            // Construir tipo genérico para Response<T>
-            JavaType dataType = OBJECT_MAPPER.getTypeFactory().constructType(responseType);
-            JavaType wrapperType = OBJECT_MAPPER.getTypeFactory()
-                    .constructParametricType(Response.class, dataType);
-
-            Response<T> parsed = OBJECT_MAPPER.readValue(responseBody, wrapperType);
-
-            // Si meta existe pero está vacío o null, mantener null
-            if (metaObj == null || (metaObj instanceof Map && ((Map<?, ?>) metaObj).isEmpty())) {
-                return new Response<>(parsed.getMessage(), parsed.getCode(), parsed.getData(), null);
+    private JavaType buildJavaType(TypeFactory typeFactory, Type responseType) {
+        if (responseType instanceof ParameterizedType parameterizedType) {
+            if (parameterizedType.getRawType() == List.class) {
+                return createListResponseType(typeFactory, parameterizedType);
             }
-
-            return parsed;
-        } else {
-            // Caso no envuelto: el servidor devolvió solo el objeto o valor booleano
-            T data = OBJECT_MAPPER.readValue(responseBody, OBJECT_MAPPER.getTypeFactory().constructType(responseType));
-            return new Response<>("OK", 200, data, null);
         }
+        return createSimpleResponseType(typeFactory, responseType);
+    }
+
+    private JavaType createListResponseType(TypeFactory typeFactory, ParameterizedType parameterizedType) {
+        Type actualTypeArgument = parameterizedType.getActualTypeArguments()[0];
+        JavaType listType = typeFactory.constructCollectionType(List.class, typeFactory.constructType(actualTypeArgument));
+        return typeFactory.constructParametricType(Response.class, listType);
+    }
+
+    private JavaType createSimpleResponseType(TypeFactory typeFactory, Type responseType) {
+        return typeFactory.constructParametricType(Response.class, typeFactory.constructType(responseType));
     }
 
     private static void logError(String message, Throwable throwable) {
@@ -176,29 +143,5 @@ public final class ApiRequest<T> implements rsc.Services.api.RequestModel {
             throw new IllegalStateException("Base URL cannot be empty");
         }
         return url.endsWith("/") ? url : url + "/";
-    }
-
-    private static String getAuthPrefix() {
-        return UrlReader.get("auth.prefix");
-    }
-
-    private static String getAppVersion() {
-        return UrlReader.get("app.version");
-    }
-
-    private static String getJsonContentType() {
-        return UrlReader.get("json.content.type");
-    }
-
-    public static void shutdown() {
-        try {
-            HTTP_CLIENT.close();
-        } catch (IOException e) {
-            logError("Error closing HTTP client", e);
-        }
-    }
-
-    public static ObjectMapper getMapper() {
-        return OBJECT_MAPPER;
     }
 }

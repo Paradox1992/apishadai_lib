@@ -6,7 +6,6 @@ import java.util.List;
 import rsc.Core.Templates.Repository.GenericRepository;
 import rsc.Data.Response;
 import rsc.Services.ConfigServices.VistaService;
-import rsc.Utility.TypeUtils;
 
 public final class VistaRepository extends GenericRepository<Vista, String> implements VistaService {
 
@@ -16,12 +15,12 @@ public final class VistaRepository extends GenericRepository<Vista, String> impl
 
     @Override
     public Response<List<Vista>> findbyModulo(String mid) {
-        return sendWithParam(mid, TypeUtils.of(Vista.class));
+        return sendWithParam(mid, Vista.class);
     }
 
     @Override
     public Response<List<VistaEstado>> estadosList() {
-        return send(null, TypeUtils.of(VistaEstado.class));
+        return send(null, VistaEstado.class);
     }
 
 }
