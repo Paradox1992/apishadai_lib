@@ -28,6 +28,6 @@ public final class TypeUtils {
 
     public static <T> JavaType rspPgList(Class<T> clazz) {
         JavaType listType = mapper.getTypeFactory().constructCollectionType(List.class, clazz);
-        return mapper.getTypeFactory().constructParametricType(rsc.Data.RspPg.class, listType);
+        return mapper.getTypeFactory().constructParametricType(rsc.Data.ResponsePaginate.class, listType);
     }
 }

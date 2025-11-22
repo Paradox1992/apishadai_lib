@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @param <T>
  */
-public final class RspPg<T> implements Serializable {
+public final class ResponsePaginate<T> implements Serializable {
 
     private static final long serialVersionUID = 6643757336253708429L;
 
@@ -20,7 +20,7 @@ public final class RspPg<T> implements Serializable {
     private final PgInfo meta;
 
     @JsonCreator
-    public RspPg(
+    public ResponsePaginate(
             @JsonProperty("message") String message,
             @JsonProperty("code") long code,
             @JsonProperty("data") T data,
@@ -32,12 +32,12 @@ public final class RspPg<T> implements Serializable {
     }
 
     
-    public RspPg(String message, long code, T data) {
+    public ResponsePaginate(String message, long code, T data) {
         this(message, code, data, null);
     }
 
     // Constructor vaci­o requerido por Jackson
-    public RspPg() {
+    public ResponsePaginate() {
         this(null, 0, null, null);
     }
 

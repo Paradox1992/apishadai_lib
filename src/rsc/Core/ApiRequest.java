@@ -109,7 +109,6 @@ public final class ApiRequest<T> implements rsc.Services.api.RequestModel {
 
         TypeFactory typeFactory = OBJECT_MAPPER.getTypeFactory();
         JavaType javaType = buildJavaType(typeFactory, responseType);
-
         return OBJECT_MAPPER.readValue(responseBody, javaType);
     }
 

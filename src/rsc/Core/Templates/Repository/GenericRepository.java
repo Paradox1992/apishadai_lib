@@ -91,4 +91,5 @@ public class GenericRepository<T, ID> implements GenericService<T, ID> {
     public Response<List<T>> findAll() {
         return send(RouteHelper.buildRoute(session.getAccessibleContext()), null, TypeUtils.listOf(entityClass));
     }
+
 }
