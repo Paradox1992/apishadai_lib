@@ -41,6 +41,4 @@ public final class ConfigRepository implements ConfigService {
     public ActionsVistaService actionsVistaService(Session session) {
      return ConfigFactory.ACTIONVISTA_SERVICE(session);
     }
-    
-
 }

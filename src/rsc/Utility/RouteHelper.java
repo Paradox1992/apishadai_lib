@@ -109,4 +109,32 @@ public final class RouteHelper {
         return new ButtonRoute(url, method, true);
     }
 
+    public static ButtonRoute buildRoutePaged(AccessibleContext accessibleContext, Object... param) {
+        String accessibleDescription = accessibleContext.getAccessibleDescription();
+
+        if (accessibleDescription == null || accessibleDescription.isEmpty()) {
+            UTL.AlertService().error(null, "AccessibleDescription no puede estar vacío.");
+            return null;
+        }
+
+        String[] array = accessibleDescription.split(":");
+        if (array.length < 2) {
+            UTL.AlertService().error(null, "AccessibleDescription incompleto.");
+            return null;
+        }
+
+        String method = array[0];
+        String url = array[1];
+
+        // Con parámetros
+        if (param != null && param.length > 0) {
+
+            String newUrl = url.replace("paged", String.valueOf("?page=" + param[0]));
+            return new ButtonRoute(newUrl, method, true);
+
+        }
+
+        // Sin parámetros
+        return new ButtonRoute(url, method, true);
+    }
 }

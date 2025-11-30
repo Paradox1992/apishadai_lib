@@ -92,4 +92,10 @@ public class GenericRepository<T, ID> implements GenericService<T, ID> {
         return send(RouteHelper.buildRoute(session.getAccessibleContext()), null, TypeUtils.listOf(entityClass));
     }
 
+    @Override
+    public Response<List<T>> findAllPaged(int page) {
+        return send(RouteHelper.buildRoutePaged(session.getAccessibleContext(), page), null, TypeUtils.listOf(entityClass));
+
+    }
+
 }

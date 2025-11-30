@@ -8,6 +8,7 @@ import rsc.Services.UbicacionService;
 import rsc.Services.WorkService;
 import rsc.Services.ClientesServices.ClientesService;
 
+
 public interface ApiServices {
 
     AuthService authService();
@@ -15,10 +16,12 @@ public interface ApiServices {
     ClientesService clienteService(Session session);
 
     ConfigService configService();
-    
+
     PromoService promoService();
-    
+
     UbicacionService ubicacionService();
-    
+
     WorkService workService();
+
+    
 }

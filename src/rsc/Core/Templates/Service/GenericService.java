@@ -19,4 +19,6 @@ public interface GenericService<T, ID> {
 
     Response<List<T>> findAll();
 
+    Response<List<T>> findAllPaged(int page);
+
 }
