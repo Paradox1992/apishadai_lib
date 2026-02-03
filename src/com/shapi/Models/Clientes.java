@@ -41,6 +41,11 @@ public class Clientes {
     @JsonProperty("departamento")
     private Departamentos departamento;
 
+    @JsonProperty("phone_updated_at")
+    @JsonDeserialize(using = OffsetDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+    private OffsetDateTime phone_updated_at;
+
     @JsonProperty("created_at")
     @JsonDeserialize(using = OffsetDateTimeDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
@@ -54,7 +59,7 @@ public class Clientes {
     public Clientes() {
     }
 
-    public Clientes(int id, String docid, String pnombre, String snombre, String papellido, String spaellido, int edad, String telefono, String genero, Municipios municipio, Departamentos departamento, OffsetDateTime created_at, OffsetDateTime updated_at) {
+    public Clientes(int id, String docid, String pnombre, String snombre, String papellido, String spaellido, int edad, String telefono, String genero, Municipios municipio, Departamentos departamento, OffsetDateTime phone_updated_at, OffsetDateTime created_at, OffsetDateTime updated_at) {
         this.id = id;
         this.docid = docid;
         this.pnombre = pnombre;
@@ -66,6 +71,7 @@ public class Clientes {
         this.genero = genero;
         this.municipio = municipio;
         this.departamento = departamento;
+        this.phone_updated_at = phone_updated_at;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
@@ -255,8 +261,13 @@ public class Clientes {
     public void setUpdated_at(OffsetDateTime updated_at) {
         this.updated_at = updated_at;
     }
-    
-    
-    
+
+    public void setPhone_updated_at(OffsetDateTime phone_updated_at) {
+        this.phone_updated_at = phone_updated_at;
+    }
+
+    public OffsetDateTime getPhone_updated_at() {
+        return phone_updated_at;
+    }
 
 }

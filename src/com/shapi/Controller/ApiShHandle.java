@@ -15,7 +15,6 @@ import rsc.Services.WorkService;
 import rsc.Services.api.ApiServices;
 import rsc.Services.ClientesServices.ClientesService;
 
-
 public final class ApiShHandle implements ApiServices {
 
     private final AuthService _AuthService = new AuthRepository();
@@ -24,12 +23,13 @@ public final class ApiShHandle implements ApiServices {
     private final PromoService _PromoService = new PromoRepository();
     private final UbicacionService _UbicacionService = new UbicacionRepository();
     private final WorkService _WorkService = new WorkRepository();
-    
+
     private ApiShHandle() {
     }
 
     @Override
     public ClientesService clienteService(Session session) {
+        this._ClienteService.setSession(session);
         return this._ClienteService;
     }
 

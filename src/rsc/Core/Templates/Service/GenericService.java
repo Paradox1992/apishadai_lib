@@ -1,5 +1,6 @@
 package rsc.Core.Templates.Service;
 
+import com.shapi.Models.Utils.FilterModel;
 import com.shapi.Models.auth.Session;
 import java.util.List;
 
@@ -20,5 +21,7 @@ public interface GenericService<T, ID> {
     Response<List<T>> findAll();
 
     Response<List<T>> findAllPaged(int page);
+
+    Response<List<T>> filter(FilterModel filter, int page);
 
 }

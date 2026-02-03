@@ -11,11 +11,13 @@ public class VistaEstado {
     private int id;
 
     @JsonProperty("descripcion")
-    private String description;
-
+    private String descripcion;
+    
+    @JsonProperty("created_at")
     @JsonDeserialize(using = OffsetDateTimeDeserializer.class)
     private OffsetDateTime created_at;
 
+    @JsonProperty("updated_at")
     @JsonDeserialize(using = OffsetDateTimeDeserializer.class)
     private OffsetDateTime updated_at;
 
@@ -27,9 +29,9 @@ public class VistaEstado {
         this.id = id;
     }
 
-    public VistaEstado(int id, String description, OffsetDateTime created_at, OffsetDateTime updated_at) {
+    public VistaEstado(int id, String descripcion, OffsetDateTime created_at, OffsetDateTime updated_at) {
         this.id = id;
-        this.description = description;
+        this.descripcion = descripcion;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
@@ -43,12 +45,12 @@ public class VistaEstado {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     /**
@@ -81,7 +83,7 @@ public class VistaEstado {
 
     @Override
     public String toString() {
-        return getDescription();
+        return getDescripcion();
     }
 
     @Override

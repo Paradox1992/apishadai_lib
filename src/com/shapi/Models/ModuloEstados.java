@@ -1,12 +1,13 @@
 package com.shapi.Models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 import rsc.Utility.OffsetDateTimeDeserializer;
 
-public class ModuloEstados{
+public class ModuloEstados {
 
     @JsonProperty("id")
     private int id;
@@ -14,10 +15,14 @@ public class ModuloEstados{
     @JsonProperty("descripcion")
     private String description;
 
+    @JsonProperty("created_at")
     @JsonDeserialize(using = OffsetDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private OffsetDateTime created_at;
 
+    @JsonProperty("updated_at")
     @JsonDeserialize(using = OffsetDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private OffsetDateTime updated_at;
 
     // Constructores
@@ -92,7 +97,7 @@ public class ModuloEstados{
      */
     @Override
     public int hashCode() {
-         return Objects.hash(id);
+        return Objects.hash(id);
     }
 
     @Override
@@ -109,6 +114,5 @@ public class ModuloEstados{
         final ModuloEstados other = (ModuloEstados) obj;
         return this.id == other.id;
     }
-    
-    
+
 }

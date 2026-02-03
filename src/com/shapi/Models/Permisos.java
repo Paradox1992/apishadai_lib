@@ -1,5 +1,6 @@
 package com.shapi.Models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.OffsetDateTime;
@@ -23,13 +24,16 @@ public class Permisos {
     private Actionsvistas actionvista;
 
     @JsonProperty("tipo_tiempo")
-    @JsonDeserialize(using = OffsetDateTimeDeserializer.class)
     private TiposTiempo tipo_tiempo;
 
+    @JsonProperty("created_at")
     @JsonDeserialize(using = OffsetDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private OffsetDateTime created_at;
 
+    @JsonProperty("updated_at")
     @JsonDeserialize(using = OffsetDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private OffsetDateTime updated_at;
 
     // Constructores

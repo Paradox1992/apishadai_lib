@@ -1,32 +1,15 @@
 package com.shapi.Models.Utils;
 
-import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
 
-public class FilterModel implements Serializable {
+public record FilterModel(String name,FilterItem... filterItem) {
 
-    private static final long serialVersionUID = -2895802361944362531L;
+    public FilterModel sanitize() {
+        FilterItem[] sanitizedItems = Arrays.stream(filterItem)
+                .filter(Objects::nonNull)
+                .toArray(FilterItem[]::new);
 
-    private final FilterItem[] filterItem;
-    private String name;
-
-    public FilterModel(FilterItem... filterItem) {
-        this.filterItem = filterItem;
-    }
-
-    public FilterModel(String name, FilterItem... filterItem) {
-        this.filterItem = filterItem;
-        this.name = name;
-    }
-
-    public FilterItem[] getFilterItem() {
-        return this.filterItem;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+        return new FilterModel(name, sanitizedItems);
     }
 }

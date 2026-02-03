@@ -1,26 +1,39 @@
 package rsc.Repositores.ConfigRepositories;
 
+import com.shapi.Models.Actionsvistas;
 import com.shapi.Models.Vista;
 import com.shapi.Models.VistaEstado;
 import java.util.List;
 import rsc.Core.Templates.Repository.GenericRepository;
 import rsc.Data.Response;
 import rsc.Services.ConfigServices.VistaService;
+import rsc.Utility.TypeUtils;
 
 public final class VistaRepository extends GenericRepository<Vista, String> implements VistaService {
-
+    
     public VistaRepository() {
         super(Vista.class);
     }
-
+    
     @Override
-    public Response<List<Vista>> findbyModulo(String mid) {
-        return sendWithParam(mid, Vista.class);
+    public Response<List<Actionsvistas>> acctionsList(String vid) {
+        return sendWithParam(vid, TypeUtils.listOf(Actionsvistas.class));
     }
-
+    
     @Override
     public Response<List<VistaEstado>> estadosList() {
-        return send(null, VistaEstado.class);
+        return send(null, TypeUtils.listOf(VistaEstado.class));
     }
-
+    
+    @Override
+    public Response<Boolean> crearAccion(Actionsvistas accion) {
+        return send(null, Boolean.class);
+        
+    }
+    
+    @Override
+    public Response<Boolean> EliminarAccion(String id) {
+        return send(null, Boolean.class);
+    }
+    
 }

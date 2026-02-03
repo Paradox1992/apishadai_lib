@@ -1,5 +1,9 @@
 package rsc.Services.PromoServices;
 
+import com.shapi.Models.Clientes;
+import com.shapi.Models.Departamentos;
+import com.shapi.Models.Municipios;
+import com.shapi.Models.Promociones;
 import com.shapi.Models.Tikets;
 import com.shapi.Models.Utils.Base64File;
 import com.shapi.Models.Utils.FilterModel;
@@ -9,7 +13,21 @@ import rsc.Data.Response;
 
 public interface TicketsService extends GenericService<Tikets, Object> {
 
-    Response<List<Tikets>> filter(FilterModel filter);
+    Response<Base64File> generarTicket(Tikets tiket);
 
-    Response<Base64File> generateTicket(Tikets tiket);
+    Response<List<Clientes>> clientesList();
+
+    Response<List<Clientes>> clientesFilter(FilterModel filter);
+
+    Response<Boolean> creaCliente(Clientes cliente);
+
+    Response<Boolean> updatePhoneCliente(Clientes cliente);
+
+    Response<Boolean> activePhone(Clientes cliente);
+
+    Response<List<Departamentos>> departamentosList();
+
+    Response<List<Municipios>> municipios(int departamentoId);
+
+    Response<Promociones> activePromo();
 }

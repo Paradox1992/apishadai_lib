@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.OffsetDateTime;
+import java.util.Objects;
 import rsc.Utility.OffsetDateTimeDeserializer;
 
 public class PromoEstado {
@@ -94,6 +95,32 @@ public class PromoEstado {
     @Override
     public String toString() {
         return getDescripcion();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + this.id;
+        hash = 59 * hash + Objects.hashCode(this.descripcion);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PromoEstado other = (PromoEstado) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return Objects.equals(this.descripcion, other.descripcion);
     }
 
 }

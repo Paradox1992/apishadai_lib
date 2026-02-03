@@ -1,5 +1,6 @@
 package rsc.Core.Templates.Repository;
 
+import com.shapi.Models.Utils.FilterModel;
 import com.shapi.Models.auth.Session;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -96,6 +97,11 @@ public class GenericRepository<T, ID> implements GenericService<T, ID> {
     public Response<List<T>> findAllPaged(int page) {
         return send(RouteHelper.buildRoutePaged(session.getAccessibleContext(), page), null, TypeUtils.listOf(entityClass));
 
+    }
+
+    @Override
+    public Response<List<T>> filter(FilterModel filter, int page) {
+        return send(RouteHelper.buildRoutePaged(session.getAccessibleContext(), page), filter, TypeUtils.listOf(entityClass));
     }
 
 }

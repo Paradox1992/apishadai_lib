@@ -12,24 +12,24 @@ import rsc.Utility.TypeUtils;
 
 public final class UserRepository extends GenericRepository<User, String>
         implements UserService {
-
+    
     public UserRepository() {
         super(User.class);
     }
-
+    
     @Override
     public Response<List<User>> filter(FilterModel filter) {
         return send(filter, User.class);
     }
-
+    
     @Override
     public Response<List<Roles>> rolesList() {
-        return send(null, Roles.class);
+        return send(null, TypeUtils.listOf(Roles.class));
     }
-
+    
     @Override
     public Response<List<UserEstado>> estadosList() {
-        return send(null, UserEstado.class);
+        return send(null, TypeUtils.listOf(UserEstado.class));
     }
-
+    
 }

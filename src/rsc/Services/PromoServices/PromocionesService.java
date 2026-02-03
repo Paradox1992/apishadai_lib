@@ -9,9 +9,9 @@ import rsc.Data.Response;
 
 public interface PromocionesService extends GenericService<Promociones, Object> {
 
-    Response<Promociones> getActive();
+    
 
-    Response<List<Promociones>> filer(FilterModel filter);
+    Response<List<Promociones>> filter(FilterModel filter);
 
     Response<List<PromoEstado>> estadosList();
 

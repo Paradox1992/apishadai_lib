@@ -1,7 +1,6 @@
 package rsc.Repositores.ClientesRepository;
 
 import com.shapi.Models.Clientes;
-import com.shapi.Models.Utils.FilterModel;
 import java.util.List;
 import rsc.Core.Templates.Repository.GenericRepository;
 import rsc.Data.Response;
@@ -16,11 +15,6 @@ public final class ClienteRepository extends GenericRepository<Clientes, Object>
     @Override
     public Response<List<Clientes>> lasts() {
         return send(null, Clientes.class);
-    }
-
-    @Override
-    public Response<List<Clientes>> filter(FilterModel filter) {
-        return send(filter, Clientes.class);
     }
 
 }
