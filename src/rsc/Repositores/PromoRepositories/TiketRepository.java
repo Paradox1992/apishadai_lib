@@ -52,8 +52,8 @@ public final class TiketRepository extends GenericRepository<Tikets, Object> imp
     }
 
     @Override
-    public Response<Boolean> activePhone(Clientes cliente) {
-        return send(cliente, Boolean.class);
+    public Response<Boolean> isActivePhone(int id) {
+        return sendWithParam(id, Boolean.class);
 
     }
 

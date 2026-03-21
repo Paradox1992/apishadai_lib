@@ -3,7 +3,7 @@ package rsc.Data;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.io.Serializable;
+
 
 /**
  * Representa la respuesta genérica del backend. Compatible con Jackson y con
@@ -12,9 +12,7 @@ import java.io.Serializable;
  * @param <T>
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class Response<T> extends Pagination implements Serializable {
-
-    private static final long serialVersionUID = 4431126716444649118L;
+public final class Response<T> extends Pagination   {
 
     private final String message;
     private final long code;

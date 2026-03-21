@@ -56,6 +56,7 @@ public final class Session extends ActionButton {
         this.stockid = 0;
         this.deviceid = 0;
         this.spermisos = null;
+
     }
 
     public String getToken() {
@@ -92,7 +93,7 @@ public final class Session extends ActionButton {
     }
 
     public AccessibleContext getAccessibleContext() {
-        return this.accessibleContext;
+        return accessibleContext;
     }
 
 }

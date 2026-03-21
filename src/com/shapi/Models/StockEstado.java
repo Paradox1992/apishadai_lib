@@ -6,22 +6,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.OffsetDateTime;
 import rsc.Utility.OffsetDateTimeDeserializer;
 
-public class Stock {
+public class StockEstado {
 
     @JsonProperty("id")
     private int id;
 
     @JsonProperty("descripcion")
     private String descripcion;
-
-    @JsonProperty("telefono")
-    private String telefono;
-
-    @JsonProperty("ubicacion")
-    private String ubicacion;
-
-    @JsonProperty("estado")
-    private StockEstado estado;
 
     @JsonProperty("created_at")
     @JsonDeserialize(using = OffsetDateTimeDeserializer.class)
@@ -33,125 +24,50 @@ public class Stock {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private OffsetDateTime updated_at;
 
-    public Stock() {
+    public StockEstado() {
     }
 
-    public Stock(int id) {
+    public StockEstado(int id) {
         this.id = id;
     }
 
-    public Stock(int id, String descripcion, String telefono, String ubicacion, StockEstado estado, OffsetDateTime created_at, OffsetDateTime updated_at) {
+    public StockEstado(int id, String descripcion, OffsetDateTime created_at, OffsetDateTime updated_at) {
         this.id = id;
         this.descripcion = descripcion;
-        this.telefono = telefono;
-        this.ubicacion = ubicacion;
-        this.estado = estado;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
 
-    /**
-     * @return the id
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(int id) {
         this.id = id;
     }
 
-    /**
-     * @return the descripcion
-     */
     public String getDescripcion() {
         return descripcion;
     }
 
-    /**
-     * @param descripcion the descripcion to set
-     */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    /**
-     * @return the telefono
-     */
-    public String getTelefono() {
-        return telefono;
-    }
-
-    /**
-     * @param telefono the telefono to set
-     */
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    /**
-     * @return the ubicacion
-     */
-    public String getUbicacion() {
-        return ubicacion;
-    }
-
-    /**
-     * @param ubicacion the ubicacion to set
-     */
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
-    }
-
-    /**
-     * @return the created_at
-     */
     public OffsetDateTime getCreated_at() {
         return created_at;
     }
 
-    /**
-     * @param created_at the created_at to set
-     */
     public void setCreated_at(OffsetDateTime created_at) {
         this.created_at = created_at;
     }
 
-    /**
-     * @return the updated_at
-     */
     public OffsetDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public StockEstado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(StockEstado estado) {
-        this.estado = estado;
-    }
-
-    /**
-     * @param updated_at the updated_at to set
-     */
     public void setUpdated_at(OffsetDateTime updated_at) {
         this.updated_at = updated_at;
-    }
-
-    @Override
-    public String toString() {
-        return getDescripcion();
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + this.id;
-        return hash;
     }
 
     @Override
@@ -165,8 +81,20 @@ public class Stock {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Stock other = (Stock) obj;
+        final StockEstado other = (StockEstado) obj;
         return this.id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        return getDescripcion();
     }
 
 }

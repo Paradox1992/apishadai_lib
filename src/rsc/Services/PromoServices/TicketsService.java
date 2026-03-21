@@ -23,7 +23,7 @@ public interface TicketsService extends GenericService<Tikets, Object> {
 
     Response<Boolean> updatePhoneCliente(Clientes cliente);
 
-    Response<Boolean> activePhone(Clientes cliente);
+    Response<Boolean> isActivePhone(int id);
 
     Response<List<Departamentos>> departamentosList();
 

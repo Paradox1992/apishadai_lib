@@ -1,0 +1,28 @@
+mar 18, 2026 12:47:26 P. M. rsc.Repositories.LogManagerRepository logError
+GRAVE: CryptoManager:decrypt
+java.lang.NullPointerException: Cannot invoke "String.getBytes(java.nio.charset.Charset)" because "src" is null
+	at java.base/java.util.Base64$Decoder.decode(Base64.java:593)
+	at rsc.Utility.CryptoManager.decrypt(CryptoManager.java:70)
+	at rsc.Utility.UrlReader.get(UrlReader.java:39)
+	at test.testMain.main(testMain.java:13)
+
+mar 18, 2026 2:30:52 P. M. rsc.Repositories.LogManagerRepository logError
+GRAVE: CryptoManager:decrypt
+java.lang.IllegalArgumentException: Input byte array has wrong 4-byte ending unit
+	at java.base/java.util.Base64$Decoder.decode0(Base64.java:842)
+	at java.base/java.util.Base64$Decoder.decode(Base64.java:570)
+	at java.base/java.util.Base64$Decoder.decode(Base64.java:593)
+	at rsc.Utility.CryptoManager.decrypt(CryptoManager.java:70)
+	at rsc.Utility.UrlReader.get(UrlReader.java:51)
+	at test.testMain.main(testMain.java:13)
+
+mar 18, 2026 2:33:16 P. M. rsc.Repositories.LogManagerRepository logError
+GRAVE: CryptoManager:decrypt
+java.lang.IllegalArgumentException: Input byte array has wrong 4-byte ending unit
+	at java.base/java.util.Base64$Decoder.decode0(Base64.java:842)
+	at java.base/java.util.Base64$Decoder.decode(Base64.java:570)
+	at java.base/java.util.Base64$Decoder.decode(Base64.java:593)
+	at rsc.Utility.CryptoManager.decrypt(CryptoManager.java:70)
+	at rsc.Utility.UrlReader.get(UrlReader.java:53)
+	at test.testMain.main(testMain.java:13)
+

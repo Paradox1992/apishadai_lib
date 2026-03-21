@@ -1,6 +1,6 @@
 package rsc.Repositores.WorkRepositories;
 
-import com.shapi.Models.Marker;
+
 import com.shapi.Models.Utils.FilterModel;
 import com.shapi.Models.WorkLunch;
 import java.util.List;
@@ -15,13 +15,13 @@ public final class WorkLunchRepository extends GenericRepository<WorkLunch, Obje
     }
 
     @Override
-    public Response<Boolean> work(Marker marker) {
-        return send(marker, Boolean.class);
+    public Response<Boolean> work() {
+        return send(null, Boolean.class);
     }
 
     @Override
-    public Response<Boolean> lunch(Marker marker) {
-        return send(marker, Boolean.class);
+    public Response<Boolean> lunch() {
+        return send(null, Boolean.class);
     }
 
     @Override

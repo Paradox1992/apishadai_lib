@@ -1,12 +1,14 @@
 package com.shapi.Controller;
 
 import com.shapi.Models.auth.Session;
+import rsc.Repositores.ApiUtilRepository;
 import rsc.Repositores.AuthRepository;
 import rsc.Repositores.ClientesRepository.ClienteRepository;
 import rsc.Repositores.ConfigRepository;
 import rsc.Repositores.PromoRepository;
 import rsc.Repositores.UbicacionRepository;
 import rsc.Repositores.WorkRepository;
+import rsc.Services.ApiUtilsService;
 import rsc.Services.AuthService;
 import rsc.Services.ConfigService;
 import rsc.Services.PromoService;
@@ -23,6 +25,7 @@ public final class ApiShHandle implements ApiServices {
     private final PromoService _PromoService = new PromoRepository();
     private final UbicacionService _UbicacionService = new UbicacionRepository();
     private final WorkService _WorkService = new WorkRepository();
+    private final ApiUtilsService _apiUtilsService = new ApiUtilRepository();
 
     private ApiShHandle() {
     }
@@ -56,6 +59,11 @@ public final class ApiShHandle implements ApiServices {
     @Override
     public AuthService authService() {
         return _AuthService;
+    }
+
+    @Override
+    public ApiUtilsService UtilService() {
+        return this._apiUtilsService;
     }
 
     private static class Holder {

@@ -1,5 +1,11 @@
 package com.shapi.Models.auth;
 
-public final record Credentials(String name, String password) {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public final record Credentials(
+        @JsonProperty("name")
+        String name,
+        @JsonProperty("password")
+        String password) {
 
 }

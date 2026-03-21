@@ -1,13 +1,18 @@
 package com.shapi.Models.Utils;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.accessibility.AccessibleContext;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class ActionButton {
+//@JsonIgnoreProperties(ignoreUnknown = true)
+public abstract  class ActionButton {
 
-    @JsonIgnore
+    private String version;
     protected AccessibleContext accessibleContext;
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getVersion() {
+        return version;
+    }
 
 }

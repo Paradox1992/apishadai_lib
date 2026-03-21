@@ -1,13 +1,13 @@
 package rsc.Services.api;
 
 import com.shapi.Models.auth.Session;
+import rsc.Services.ApiUtilsService;
 import rsc.Services.AuthService;
 import rsc.Services.ConfigService;
 import rsc.Services.PromoService;
 import rsc.Services.UbicacionService;
 import rsc.Services.WorkService;
 import rsc.Services.ClientesServices.ClientesService;
-
 
 public interface ApiServices {
 
@@ -23,5 +23,5 @@ public interface ApiServices {
 
     WorkService workService();
 
-    
+    ApiUtilsService UtilService();
 }

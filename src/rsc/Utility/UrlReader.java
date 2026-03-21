@@ -3,7 +3,6 @@ package rsc.Utility;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
 import static rsc.Utility.UtilApi.UTL;
 
 /**
@@ -12,18 +11,26 @@ import static rsc.Utility.UtilApi.UTL;
  */
 public final class UrlReader {
 
-    private static final String PROPERTIES_PATH = "./props.properties"; // Debe estar en resources
+    private static final String PROPERTIES_PATH = "props.properties";
     private static final Properties PROPERTIES = new Properties();
 
     static {
-        // Carga las properties una sola vez
-        try (InputStream input = UrlReader.class.getResourceAsStream(PROPERTIES_PATH)) {
-            if (input == null) {
-                throw new IOException("No se pudo encontrar el archivo " + PROPERTIES_PATH);
+        try {
+            try (InputStream input = UrlReader.class
+                    .getClassLoader()
+                    .getResourceAsStream(PROPERTIES_PATH)) {
+
+                if (input == null) {
+                    throw new RuntimeException("No se encontró " + PROPERTIES_PATH);
+                }
+
+                PROPERTIES.load(input);
+
             }
-            PROPERTIES.load(input);
-        } catch (IOException e) {
-            UTL.logService().logError("UrlReader - Error al cargar properties", e);
+
+        } catch (IOException | RuntimeException e) {
+            UTL.logService().logError("Error cargando configuración->UrlReader", e);
+            UTL.AlertService().error(null, "Error cargando configuración->UrlReader");
             System.exit(0);
         }
     }
@@ -35,7 +42,16 @@ public final class UrlReader {
      * @return valor de la clave o null si no existe
      */
     public static String get(String key) {
-        return PROPERTIES.getProperty(key);
+        String normalizedKey = CryptoManager.getInstance()
+                .encrypt(key)
+                .replaceAll("=+$", "");
+        String encryptedValue = PROPERTIES.getProperty(normalizedKey, null);
+        if (encryptedValue == null) {
+            return null;
+        }
+        // Quitar el = inicial que agrega el parser
+        String cleanValue = encryptedValue.replaceAll("^=+", "");
+        return CryptoManager.getInstance().decrypt(cleanValue);
     }
 
     /**
@@ -44,9 +60,12 @@ public final class UrlReader {
      *
      * @param key
      * @param defaultValue
-     * @return 
+     * @return
      */
     public static String getOrDefault(String key, String defaultValue) {
         return PROPERTIES.getProperty(key, defaultValue);
+    }
+
+    private UrlReader() {
     }
 }
