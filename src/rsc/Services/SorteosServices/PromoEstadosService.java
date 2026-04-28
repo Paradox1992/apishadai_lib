@@ -1,4 +1,4 @@
-package rsc.Services.PromoServices;
+package rsc.Services.SorteosServices;
 
 import com.shapi.Models.PromoEstado;
 import rsc.Core.Templates.Service.GenericService;

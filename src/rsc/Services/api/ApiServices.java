@@ -4,10 +4,11 @@ import com.shapi.Models.auth.Session;
 import rsc.Services.ApiUtilsService;
 import rsc.Services.AuthService;
 import rsc.Services.ConfigService;
-import rsc.Services.PromoService;
 import rsc.Services.UbicacionService;
 import rsc.Services.WorkService;
 import rsc.Services.ClientesServices.ClientesService;
+import rsc.Services.ReportesService;
+import rsc.Services.SorteosService;
 
 public interface ApiServices {
 
@@ -17,11 +18,14 @@ public interface ApiServices {
 
     ConfigService configService();
 
-    PromoService promoService();
+    SorteosService sorteosService();
 
     UbicacionService ubicacionService();
 
     WorkService workService();
 
     ApiUtilsService UtilService();
+    
+    ReportesService reportesService();
+    
 }

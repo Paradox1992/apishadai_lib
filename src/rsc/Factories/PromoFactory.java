@@ -3,8 +3,8 @@ package rsc.Factories;
 import com.shapi.Models.auth.Session;
 import rsc.Repositores.PromoRepositories.PromocionesRepository;
 import rsc.Repositores.PromoRepositories.TiketRepository;
-import rsc.Services.PromoServices.PromocionesService;
-import rsc.Services.PromoServices.TicketsService;
+import rsc.Services.SorteosServices.PromocionesService;
+import rsc.Services.SorteosServices.TicketsService;
 
 public final class PromoFactory {
 

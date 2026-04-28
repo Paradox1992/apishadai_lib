@@ -1,4 +1,4 @@
-package rsc.Services.PromoServices;
+package rsc.Services.SorteosServices;
 
 import com.shapi.Models.PromoEstado;
 import com.shapi.Models.Promociones;
@@ -8,8 +8,6 @@ import rsc.Core.Templates.Service.GenericService;
 import rsc.Data.Response;
 
 public interface PromocionesService extends GenericService<Promociones, Object> {
-
-    
 
     Response<List<Promociones>> filter(FilterModel filter);
 

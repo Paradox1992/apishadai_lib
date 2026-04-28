@@ -1,11 +1,12 @@
 package rsc.Repositores;
 
+import rsc.Services.SorteosServices.TicketsService;
+import rsc.Services.SorteosServices.PromocionesService;
 import com.shapi.Models.auth.Session;
 import rsc.Factories.PromoFactory;
-import rsc.Services.PromoService;
-import rsc.Services.PromoServices.*;
+import rsc.Services.SorteosService;
 
-public final class PromoRepository implements PromoService {
+public final class PromoRepository implements SorteosService {
 
     @Override
     public PromocionesService promocionesService(Session session) {

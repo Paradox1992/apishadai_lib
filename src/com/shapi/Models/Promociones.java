@@ -28,6 +28,12 @@ public class Promociones {
     @JsonProperty("estado")
     private PromoEstado estado;
 
+    @JsonProperty("impresiones")
+    private int impresiones;
+
+    @JsonProperty("valor")
+    private int valor;
+
     @JsonProperty("created_at")
     @JsonDeserialize(using = OffsetDateTimeDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
@@ -41,13 +47,15 @@ public class Promociones {
     public Promociones() {
     }
 
-    public Promociones(int id, String nombre, String descripcion, OffsetDateTime fecha_inicio, OffsetDateTime fecha_fin, PromoEstado estado, OffsetDateTime created_at, OffsetDateTime updated_at) {
+    public Promociones(int id, String nombre, String descripcion, OffsetDateTime fecha_inicio, OffsetDateTime fecha_fin, PromoEstado estado, int impresiones, int valor, OffsetDateTime created_at, OffsetDateTime updated_at) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fecha_inicio = fecha_inicio;
         this.fecha_fin = fecha_fin;
         this.estado = estado;
+        this.impresiones = impresiones;
+        this.valor = valor;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
@@ -168,7 +176,32 @@ public class Promociones {
         this.updated_at = updated_at;
     }
 
-    
-    
-    
+    /**
+     * @return the impresiones
+     */
+    public int getImpresiones() {
+        return impresiones;
+    }
+
+    /**
+     * @param impresiones the impresiones to set
+     */
+    public void setImpresiones(int impresiones) {
+        this.impresiones = impresiones;
+    }
+
+    /**
+     * @return the valor
+     */
+    public int getValor() {
+        return valor;
+    }
+
+    /**
+     * @param valor the valor to set
+     */
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+
 }

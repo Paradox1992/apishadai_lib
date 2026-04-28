@@ -10,7 +10,7 @@ import com.shapi.Models.Utils.FilterModel;
 import java.util.List;
 import rsc.Core.Templates.Repository.GenericRepository;
 import rsc.Data.Response;
-import rsc.Services.PromoServices.TicketsService;
+import rsc.Services.SorteosServices.TicketsService;
 import rsc.Utility.TypeUtils;
 
 public final class TiketRepository extends GenericRepository<Tikets, Object> implements TicketsService {

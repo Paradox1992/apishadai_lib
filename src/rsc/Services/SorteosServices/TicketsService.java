@@ -1,4 +1,4 @@
-package rsc.Services.PromoServices;
+package rsc.Services.SorteosServices;
 
 import com.shapi.Models.Clientes;
 import com.shapi.Models.Departamentos;

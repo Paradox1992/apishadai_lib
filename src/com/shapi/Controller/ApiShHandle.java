@@ -6,64 +6,72 @@ import rsc.Repositores.AuthRepository;
 import rsc.Repositores.ClientesRepository.ClienteRepository;
 import rsc.Repositores.ConfigRepository;
 import rsc.Repositores.PromoRepository;
+import rsc.Repositores.ReporteRepository;
 import rsc.Repositores.UbicacionRepository;
 import rsc.Repositores.WorkRepository;
 import rsc.Services.ApiUtilsService;
 import rsc.Services.AuthService;
 import rsc.Services.ConfigService;
-import rsc.Services.PromoService;
 import rsc.Services.UbicacionService;
 import rsc.Services.WorkService;
 import rsc.Services.api.ApiServices;
 import rsc.Services.ClientesServices.ClientesService;
+import rsc.Services.ReportesService;
+import rsc.Services.SorteosService;
 
 public final class ApiShHandle implements ApiServices {
 
-    private final AuthService _AuthService = new AuthRepository();
-    private final ClientesService _ClienteService = new ClienteRepository();
-    private final ConfigService _ConfigService = new ConfigRepository();
-    private final PromoService _PromoService = new PromoRepository();
-    private final UbicacionService _UbicacionService = new UbicacionRepository();
-    private final WorkService _WorkService = new WorkRepository();
-    private final ApiUtilsService _apiUtilsService = new ApiUtilRepository();
+    private final AuthService AUTH_SERVICE = new AuthRepository();
+    private final ClientesService CLIENTES_SERVICE = new ClienteRepository();
+    private final ConfigService CONFIG_SERVICE = new ConfigRepository();
+    private final SorteosService SORTEOS_SERVICE = new PromoRepository();
+    private final UbicacionService UBICACION_SERVICE = new UbicacionRepository();
+    private final WorkService WORK_LUNCH_SERVICE = new WorkRepository();
+    private final ApiUtilsService UTIL_SERVICE = new ApiUtilRepository();
+    private final ReportesService REPORTES_SERVICE = new ReporteRepository();
 
     private ApiShHandle() {
     }
 
     @Override
     public ClientesService clienteService(Session session) {
-        this._ClienteService.setSession(session);
-        return this._ClienteService;
+        this.CLIENTES_SERVICE.setSession(session);
+        return this.CLIENTES_SERVICE;
     }
 
     @Override
     public ConfigService configService() {
-        return this._ConfigService;
+        return this.CONFIG_SERVICE;
     }
 
     @Override
-    public PromoService promoService() {
-        return this._PromoService;
+    public SorteosService sorteosService() {
+        return this.SORTEOS_SERVICE;
     }
 
     @Override
     public UbicacionService ubicacionService() {
-        return this._UbicacionService;
+        return this.UBICACION_SERVICE;
     }
 
     @Override
     public WorkService workService() {
-        return this._WorkService;
+        return this.WORK_LUNCH_SERVICE;
     }
 
     @Override
     public AuthService authService() {
-        return _AuthService;
+        return AUTH_SERVICE;
     }
 
     @Override
     public ApiUtilsService UtilService() {
-        return this._apiUtilsService;
+        return this.UTIL_SERVICE;
+    }
+
+    @Override
+    public ReportesService reportesService() {
+        return this.REPORTES_SERVICE;
     }
 
     private static class Holder {

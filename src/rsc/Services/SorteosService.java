@@ -1,9 +1,10 @@
 package rsc.Services;
 
+import rsc.Services.SorteosServices.TicketsService;
+import rsc.Services.SorteosServices.PromocionesService;
 import com.shapi.Models.auth.Session;
-import rsc.Services.PromoServices.*;
 
-public interface PromoService {
+public interface SorteosService {
 
     PromocionesService promocionesService(Session session);
 

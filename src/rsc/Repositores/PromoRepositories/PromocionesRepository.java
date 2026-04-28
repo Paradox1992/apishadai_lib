@@ -6,7 +6,7 @@ import com.shapi.Models.Utils.FilterModel;
 import java.util.List;
 import rsc.Core.Templates.Repository.GenericRepository;
 import rsc.Data.Response;
-import rsc.Services.PromoServices.PromocionesService;
+import rsc.Services.SorteosServices.PromocionesService;
 import rsc.Utility.TypeUtils;
 
 public final class PromocionesRepository extends GenericRepository<Promociones, Object> implements PromocionesService {
