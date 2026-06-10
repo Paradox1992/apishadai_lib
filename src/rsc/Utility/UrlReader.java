@@ -11,7 +11,7 @@ import static rsc.Utility.UtilApi.UTL;
  */
 public final class UrlReader {
 
-    private static final String PROPERTIES_PATH = "props.properties";
+    private static final String PROPERTIES_PATH = "con_local.properties";
     private static final Properties PROPERTIES = new Properties();
 
     static {

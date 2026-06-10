@@ -19,26 +19,39 @@ public class TicketReporteRepository extends GenericRepository<Tikets, Object> i
     }
 
     @Override
-    public Response<List<Promociones>> filterPromos(FilterModel model) {
-        return send(model, TypeUtils.listOf(Promociones.class));
-    }
-
-    @Override
     public Response<List<Clientes>> filterClientes(FilterModel model) {
+        
         return send(model, TypeUtils.listOf(Clientes.class));
-
     }
 
     @Override
     public Response<List<User>> filterUsuarios(FilterModel model) {
         return send(model, TypeUtils.listOf(User.class));
-
     }
 
     @Override
     public Response<List<Stock>> filterStocks(FilterModel model) {
         return send(model, TypeUtils.listOf(Stock.class));
+    }
 
+    @Override
+    public Response<List<Promociones>> listSorteos( ) {
+        return send(null, TypeUtils.listOf(Promociones.class));
+    }
+
+    @Override
+    public Response<List<Clientes>> listClientes( ) {
+        return send(null, TypeUtils.listOf(Clientes.class));
+    }
+
+    @Override
+    public Response<List<Stock>> listStocks( ) {
+        return send(null, TypeUtils.listOf(Stock.class));
+    }
+
+    @Override
+    public Response<List<User>> listUsuarios( ) {
+        return send(null, TypeUtils.listOf(User.class));
     }
 
 }

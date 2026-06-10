@@ -12,12 +12,18 @@ import rsc.Data.Response;
 
 public interface TicketReporteService extends GenericService<Tikets, Object> {
 
-    Response<List<Promociones>> filterPromos(FilterModel model);
-
     Response<List<Clientes>> filterClientes(FilterModel model);
 
     Response<List<User>> filterUsuarios(FilterModel model);
 
     Response<List<Stock>> filterStocks(FilterModel model);
+
+    Response<List<Promociones>> listSorteos();
+
+    Response<List<Clientes>> listClientes();
+
+    Response<List<Stock>> listStocks();
+
+    Response<List<User>> listUsuarios();
 
 }

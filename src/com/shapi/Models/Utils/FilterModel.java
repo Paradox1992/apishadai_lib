@@ -26,9 +26,14 @@ public final class FilterModel {
     }
 
     public FilterModel sanitize() {
+        if (filterItem == null || filterItem.length == 0) {
+            return new FilterModel(name);
+        }
+
         FilterItem[] sanitizedItems = Arrays.stream(filterItem)
                 .filter(Objects::nonNull)
                 .toArray(FilterItem[]::new);
+
         return new FilterModel(name, sanitizedItems);
     }
 }

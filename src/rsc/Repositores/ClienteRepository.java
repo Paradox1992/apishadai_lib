@@ -9,7 +9,7 @@ public class ClienteRepository implements ClienteService {
 
     @Override
     public ClientesService clienteService(Session session) {
-        return ClienteFactory.CLIENTE_SERVICE(session);
+        return ClienteFactory.CLIENTE_FACTORY(session);
     }
 
 }

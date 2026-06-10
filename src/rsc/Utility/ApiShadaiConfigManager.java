@@ -7,7 +7,7 @@ import static rsc.Utility.UtilApi.UTL;
 
 public final class ApiShadaiConfigManager {
 
-    private static final String CONFIG_FILE = "apishadai.properties";
+    private static final String CONFIG_FILE = "apishadai_version.properties";
     private static final Properties PROPS = new Properties();
     private static String appVersion;
 
