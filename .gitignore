@@ -1,6 +1,9 @@
-*
-!src/
-
-!src/**
-
-!.gitignore
+/dist
+/build
+/nbproject/private/
+/src/con_*.properties
+*.log
+*.log.*
+*.lck
+.env
+.env.*
