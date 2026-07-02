@@ -5,6 +5,7 @@ import rsc.repository.ApiMetadataRepository;
 import rsc.repository.AuthRepository;
 import rsc.repository.client.CustomerRepository;
 import rsc.repository.ConfigurationRepository;
+import rsc.repository.FarmaRepository;
 import rsc.repository.RaffleRepository;
 import rsc.repository.ReportRepository;
 import rsc.repository.LocationRepository;
@@ -12,6 +13,7 @@ import rsc.repository.WorkRepository;
 import rsc.service.ApiMetadataService;
 import rsc.service.AuthService;
 import rsc.service.ConfigurationService;
+import rsc.service.FarmaService;
 import rsc.service.LocationService;
 import rsc.service.WorkService;
 import rsc.service.api.ApiServices;
@@ -23,6 +25,7 @@ public final class ShApiClient implements ApiServices {
 
     private final AuthService AUTH_SERVICE = new AuthRepository();
     private final CustomerService CLIENTES_SERVICE = new CustomerRepository();
+    private final FarmaService FARMA_SERVICE = new FarmaRepository();
     private final ConfigurationService CONFIG_SERVICE = new ConfigurationRepository();
     private final RaffleService SORTEOS_SERVICE = new RaffleRepository();
     private final LocationService UBICACION_SERVICE = new LocationRepository();
@@ -37,6 +40,11 @@ public final class ShApiClient implements ApiServices {
     public CustomerService clienteService(Session session) {
         this.CLIENTES_SERVICE.setSession(session);
         return this.CLIENTES_SERVICE;
+    }
+
+    @Override
+    public FarmaService farmaService() {
+        return this.FARMA_SERVICE;
     }
 
     @Override

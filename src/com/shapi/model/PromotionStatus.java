@@ -32,4 +32,11 @@ public class PromotionStatus {
         this.updated_at = updated_at;
     }
 
+    @Override
+    public String toString() {
+        return this.descripcion;
+    }
+    
+        
+
 }
