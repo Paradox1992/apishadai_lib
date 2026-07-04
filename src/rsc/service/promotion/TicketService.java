@@ -9,25 +9,25 @@ import com.shapi.model.util.Base64File;
 import com.shapi.model.util.FilterModel;
 import java.util.List;
 import rsc.core.template.service.GenericService;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 
 public interface TicketService extends GenericService<Ticket, Object> {
 
-    Response<Base64File> generateTicket(Ticket tiket);
+    ApiResponse<Base64File> generateTicket(Ticket tiket);
 
-    Response<List<Customer>> listCustomers();
+    ApiResponse<List<Customer>> listCustomers();
 
-    Response<List<Customer>> filterCustomers(FilterModel filter);
+    ApiResponse<List<Customer>> filterCustomers(FilterModel filter);
 
-    Response<Boolean> createCustomer(Customer cliente);
+    ApiResponse<Boolean> createCustomer(Customer cliente);
 
-    Response<Boolean> updateCustomerPhone(Customer cliente);
+    ApiResponse<Boolean> updateCustomerPhone(Customer cliente);
 
-    Response<Boolean> isPhoneActive(int id);
+    ApiResponse<Boolean> isPhoneActive(int id);
 
-    Response<List<Department>> listDepartments();
+    ApiResponse<List<Department>> listDepartments();
 
-    Response<List<Municipality>> municipalities(int departamentoId);
+    ApiResponse<List<Municipality>> municipalities(int departamentoId);
 
-    Response<Promotion> activePromotion();
+    ApiResponse<Promotion> activePromotion();
 }

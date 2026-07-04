@@ -4,16 +4,16 @@ package rsc.service.work;
 import com.shapi.model.util.FilterModel;
 import com.shapi.model.WorkShift;
 import java.util.List;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 
 public interface WorkShiftService {
 
-    Response<Boolean> work();
+    ApiResponse<Boolean> work();
 
-    Response<Boolean> lunch();
+    ApiResponse<Boolean> lunch();
 
-    Response<WorkShift> find(String id);
+    ApiResponse<WorkShift> find(String id);
 
-    Response<List<WorkShift>> findUserDate(FilterModel filterModel);
+    ApiResponse<List<WorkShift>> findUserDate(FilterModel filterModel);
 
 }

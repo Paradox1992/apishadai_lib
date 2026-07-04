@@ -9,7 +9,7 @@ import com.shapi.model.util.Base64File;
 import com.shapi.model.util.FilterModel;
 import java.util.List;
 import rsc.core.template.repository.GenericRepository;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 import rsc.service.promotion.TicketService;
 import rsc.util.TypeUtils;
 
@@ -21,55 +21,55 @@ public final class TicketRepository extends GenericRepository<Ticket, Object> im
     }
 
     @Override
-    public Response<Base64File> generateTicket(Ticket tiket) {
+    public ApiResponse<Base64File> generateTicket(Ticket tiket) {
         return send(tiket, Base64File.class);
     }
 
     @Override
-    public Response<Boolean> create(Ticket entity) {
+    public ApiResponse<Boolean> create(Ticket entity) {
         return super.create(entity);
     }
 
     @Override
-    public Response<List<Customer>> listCustomers() {
+    public ApiResponse<List<Customer>> listCustomers() {
         return send(null, TypeUtils.listOf(Customer.class));
     }
 
     @Override
-    public Response<List<Customer>> filterCustomers(FilterModel filter) {
+    public ApiResponse<List<Customer>> filterCustomers(FilterModel filter) {
         return send(filter, TypeUtils.listOf(Customer.class));
     }
 
     @Override
-    public Response<Boolean> createCustomer(Customer cliente) {
+    public ApiResponse<Boolean> createCustomer(Customer cliente) {
         return send(cliente, Boolean.class);
     }
 
     @Override
-    public Response<Boolean> updateCustomerPhone(Customer cliente) {
+    public ApiResponse<Boolean> updateCustomerPhone(Customer cliente) {
         return send(cliente, Boolean.class);
 
     }
 
     @Override
-    public Response<Boolean> isPhoneActive(int id) {
+    public ApiResponse<Boolean> isPhoneActive(int id) {
         return sendWithParam(id, Boolean.class);
 
     }
 
     @Override
-    public Response<List<Department>> listDepartments() {
+    public ApiResponse<List<Department>> listDepartments() {
         return send(null, TypeUtils.listOf(Department.class));
     }
 
     @Override
-    public Response<List<Municipality>> municipalities(int departamentoId) {
+    public ApiResponse<List<Municipality>> municipalities(int departamentoId) {
         return sendWithParam(departamentoId, TypeUtils.listOf(Municipality.class));
 
     }
 
     @Override
-    public Response<Promotion> activePromotion() {
+    public ApiResponse<Promotion> activePromotion() {
         return send(null, Promotion.class);
     }
 

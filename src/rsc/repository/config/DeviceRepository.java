@@ -5,7 +5,7 @@ import com.shapi.model.DeviceStatus;
 import com.shapi.model.Stock;
 import java.util.List;
 import rsc.core.template.repository.GenericRepository;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 import rsc.service.config.DeviceService;
 import rsc.util.TypeUtils;
 
@@ -16,12 +16,12 @@ public final class DeviceRepository extends GenericRepository<Device, Object> im
     }
 
     @Override
-    public Response<List<DeviceStatus>> estadosList() {
+    public ApiResponse<List<DeviceStatus>> estadosList() {
         return send(null, TypeUtils.listOf(DeviceStatus.class));
     }
 
     @Override
-    public Response<List<Stock>> stocksList() {
+    public ApiResponse<List<Stock>> stocksList() {
         return send(null, TypeUtils.listOf(Stock.class));
     }
 }

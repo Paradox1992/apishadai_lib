@@ -5,16 +5,16 @@ import com.shapi.model.View;
 import com.shapi.model.ViewStatus;
 import java.util.List;
 import rsc.core.template.service.GenericService;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 
 public interface ViewService extends GenericService<View, String> {
 
-    Response<List<ViewAction>> acctionsList(String vid);
+    ApiResponse<List<ViewAction>> acctionsList(String vid);
 
-    Response<List<ViewStatus>> estadosList();
+    ApiResponse<List<ViewStatus>> estadosList();
 
-    Response<Boolean> crearAccion(ViewAction accion);
+    ApiResponse<Boolean> crearAccion(ViewAction accion);
 
-    Response<Boolean> EliminarAccion(String id);
+    ApiResponse<Boolean> EliminarAccion(String id);
 
 }

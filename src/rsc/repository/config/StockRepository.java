@@ -4,7 +4,7 @@ import com.shapi.model.Stock;
 import com.shapi.model.StockStatus;
 import java.util.List;
 import rsc.core.template.repository.GenericRepository;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 import rsc.service.config.StockService;
 import rsc.util.TypeUtils;
 
@@ -15,7 +15,7 @@ public final class StockRepository extends GenericRepository<Stock, Object> impl
     }
 
     @Override
-    public Response<List<StockStatus>> estadosList() {
+    public ApiResponse<List<StockStatus>> estadosList() {
         return send(null, TypeUtils.listOf(StockStatus.class));
     }
 

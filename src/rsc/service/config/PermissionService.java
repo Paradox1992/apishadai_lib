@@ -7,18 +7,18 @@ import com.shapi.model.TimeType;
 import com.shapi.model.View;
 import java.util.List;
 import rsc.core.template.service.GenericService;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 
 public interface PermissionService extends GenericService<Permission, Object> {
 
-    Response<List<Permission>> listbyUser(Object id);
+    ApiResponse<List<Permission>> listbyUser(Object id);
 
-    Response<List<AppModule>> listModules();
+    ApiResponse<List<AppModule>> listModules();
 
-    Response<List<View>> listViewsByModule(Object id);
+    ApiResponse<List<View>> listViewsByModule(Object id);
 
-    Response<List<ViewAction>> listActionsByView(Object id);
+    ApiResponse<List<ViewAction>> listActionsByView(Object id);
 
-    Response<List<TimeType>> listTipoTiempo();
+    ApiResponse<List<TimeType>> listTipoTiempo();
 
 }

@@ -3,7 +3,7 @@ package rsc.repository.client;
 import com.shapi.model.Customer;
 import java.util.List;
 import rsc.core.template.repository.GenericRepository;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 import rsc.service.client.CustomerService;
 
 public final class CustomerRepository extends GenericRepository<Customer, Object> implements CustomerService {
@@ -13,7 +13,7 @@ public final class CustomerRepository extends GenericRepository<Customer, Object
     }
 
     @Override
-    public Response<List<Customer>> lasts() {
+    public ApiResponse<List<Customer>> lasts() {
         return send(null, Customer.class);
     }
 

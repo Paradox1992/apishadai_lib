@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.shapi.model.auth.Session;
+import com.requestsupport.responses.ApiResponse;
 import org.apache.hc.client5.http.config.ConnectionConfig;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -16,7 +17,6 @@ import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 import org.apache.hc.core5.util.Timeout;
-import rsc.data.Response;
 import rsc.util.ApiConfigManager;
 import rsc.util.UrlReader;
 import rsc.Models.DeviceInfo;
@@ -49,7 +49,7 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
     }
     
     @Override
-    public <T> Response<T> send(String route, String method, Session session, Object body, Type responseType) {
+    public <T> ApiResponse<T> send(String route, String method, Session session, Object body, Type responseType) {
         
         validateInputParameters(route, method, responseType);
         
@@ -83,7 +83,7 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
     private void validateInputParameters(String route, String method, Type responseType) {
         Objects.requireNonNull(route, "Route cannot be null");
         Objects.requireNonNull(method, "Method cannot be null");
-        Objects.requireNonNull(responseType, "Response type cannot be null");
+        Objects.requireNonNull(responseType, "ApiResponse type cannot be null");
         
         if (route.isBlank()) {
             throw new IllegalArgumentException("Route cannot be blank");
@@ -131,7 +131,7 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
         }
     }
     
-    private <T> Response<T> executeRequest(CloseableHttpClient httpClient, ClassicHttpRequest request, Type responseType) throws IOException {
+    private <T> ApiResponse<T> executeRequest(CloseableHttpClient httpClient, ClassicHttpRequest request, Type responseType) throws IOException {
         return httpClient.execute(request, response -> {
             String responseBody = response.getEntity() == null
                     ? ""
@@ -140,7 +140,7 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
             
             if (responseBody == null || responseBody.isBlank()) {
                 return statusCode >= 200 && statusCode < 300
-                        ? new Response<>()
+                        ? new ApiResponse<>()
                         : errorResponse("HTTP " + statusCode + " sin cuerpo de respuesta", statusCode);
             }
             
@@ -155,9 +155,9 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
         });
     }
     
-    private <T> Response<T> parseApiResponse(String responseBody, Type responseType) throws IOException {
-        Objects.requireNonNull(responseBody, "Response body cannot be null");
-        Objects.requireNonNull(responseType, "Response type cannot be null");
+    private <T> ApiResponse<T> parseApiResponse(String responseBody, Type responseType) throws IOException {
+        Objects.requireNonNull(responseBody, "ApiResponse body cannot be null");
+        Objects.requireNonNull(responseType, "ApiResponse type cannot be null");
         
         TypeFactory typeFactory = OBJECT_MAPPER.getTypeFactory();
         JavaType javaType = buildJavaType(typeFactory, responseType);
@@ -176,11 +176,11 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
     private JavaType createListResponseType(TypeFactory typeFactory, ParameterizedType parameterizedType) {
         Type actualTypeArgument = parameterizedType.getActualTypeArguments()[0];
         JavaType listType = typeFactory.constructCollectionType(List.class, typeFactory.constructType(actualTypeArgument));
-        return typeFactory.constructParametricType(Response.class, listType);
+        return typeFactory.constructParametricType(ApiResponse.class, listType);
     }
     
     private JavaType createSimpleResponseType(TypeFactory typeFactory, Type responseType) {
-        return typeFactory.constructParametricType(Response.class, typeFactory.constructType(responseType));
+        return typeFactory.constructParametricType(ApiResponse.class, typeFactory.constructType(responseType));
     }
     
     private static void logError(String message, Throwable throwable) {
@@ -209,7 +209,7 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
         return configuredVersion == null || configuredVersion.isBlank() ? "unknown" : configuredVersion;
     }
     
-    private static <T> Response<T> errorResponse(String message, long code) {
-        return new Response<>(message, code, null);
+    private static <T> ApiResponse<T> errorResponse(String message, int code) {
+        return new ApiResponse<>(message, code, null);
     }
 }

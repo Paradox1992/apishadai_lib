@@ -8,22 +8,22 @@ import com.shapi.model.User;
 import com.shapi.model.util.FilterModel;
 import java.util.List;
 import rsc.core.template.service.GenericService;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 
 public interface TicketReportService extends GenericService<Ticket, Object> {
 
-    Response<List<Customer>> filterCustomers(FilterModel model);
+    ApiResponse<List<Customer>> filterCustomers(FilterModel model);
 
-    Response<List<User>> filterUsuarios(FilterModel model);
+    ApiResponse<List<User>> filterUsuarios(FilterModel model);
 
-    Response<List<Stock>> filterStocks(FilterModel model);
+    ApiResponse<List<Stock>> filterStocks(FilterModel model);
 
-    Response<List<Promotion>> listRaffles();
+    ApiResponse<List<Promotion>> listRaffles();
 
-    Response<List<Customer>> listCustomers();
+    ApiResponse<List<Customer>> listCustomers();
 
-    Response<List<Stock>> listStocks();
+    ApiResponse<List<Stock>> listStocks();
 
-    Response<List<User>> listUsuarios();
+    ApiResponse<List<User>> listUsuarios();
 
 }

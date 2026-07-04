@@ -6,7 +6,7 @@ import com.shapi.model.UserStatus;
 import com.shapi.model.util.FilterModel;
 import java.util.List;
 import rsc.core.template.repository.GenericRepository;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 import rsc.service.config.UserService;
 import rsc.util.TypeUtils;
 
@@ -18,17 +18,17 @@ public final class UserRepository extends GenericRepository<User, String>
     }
     
     @Override
-    public Response<List<User>> filter(FilterModel filter) {
+    public ApiResponse<List<User>> filter(FilterModel filter) {
         return send(filter, User.class);
     }
     
     @Override
-    public Response<List<Role>> rolesList() {
+    public ApiResponse<List<Role>> rolesList() {
         return send(null, TypeUtils.listOf(Role.class));
     }
     
     @Override
-    public Response<List<UserStatus>> estadosList() {
+    public ApiResponse<List<UserStatus>> estadosList() {
         return send(null, TypeUtils.listOf(UserStatus.class));
     }
     

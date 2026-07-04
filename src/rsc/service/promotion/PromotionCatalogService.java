@@ -5,12 +5,12 @@ import com.shapi.model.Promotion;
 import com.shapi.model.util.FilterModel;
 import java.util.List;
 import rsc.core.template.service.GenericService;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 
 public interface PromotionCatalogService extends GenericService<Promotion, Object> {
 
-    Response<List<Promotion>> filter(FilterModel filter);
+    ApiResponse<List<Promotion>> filter(FilterModel filter);
 
-    Response<List<PromotionStatus>> estadosList();
+    ApiResponse<List<PromotionStatus>> estadosList();
 
 }

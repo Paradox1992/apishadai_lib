@@ -5,7 +5,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
 import rsc.core.ApiHandler;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 import rsc.service.util.PaginationService;
 import rsc.util.ButtonRoute;
 import rsc.util.RouteHelper;
@@ -20,7 +20,7 @@ public class PaginationRepository<T> implements PaginationService<T> {
         this.entityClass = entityClass;
     }
 
-    private <R> Response<R> send(ButtonRoute buttonRoute, Object body, Type responseType) {
+    private <R> ApiResponse<R> send(ButtonRoute buttonRoute, Object body, Type responseType) {
         Objects.requireNonNull(buttonRoute, "buttonRoute cannot be null");
         Objects.requireNonNull(responseType, "responseType cannot be null");
         return ApiHandler.getInstance().exec().send(
@@ -39,7 +39,7 @@ public class PaginationRepository<T> implements PaginationService<T> {
     }
 
     @Override
-    public Response<List<T>> Paginate() {
+    public ApiResponse<List<T>> Paginate() {
         if (session == null || session.getAccessibleContext() == null) {
             throw new IllegalStateException("Session y AccessibleContext son requeridos para paginar");
         }

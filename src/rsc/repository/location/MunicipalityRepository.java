@@ -3,7 +3,7 @@ package rsc.repository.location;
 import com.shapi.model.Municipality;
 import java.util.List;
 import rsc.core.template.repository.GenericRepository;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 import rsc.service.location.MunicipalityService;
 
 
@@ -14,7 +14,7 @@ public final class MunicipalityRepository extends GenericRepository<Municipality
     }
 
     @Override
-    public Response<List<Municipality>> bydepartamento(Object departamentoId) {
+    public ApiResponse<List<Municipality>> bydepartamento(Object departamentoId) {
         return sendWithParam(departamentoId, Municipality.class);
     }
 

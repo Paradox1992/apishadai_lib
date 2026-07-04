@@ -2,26 +2,27 @@ package rsc.core.template.service;
 
 import com.shapi.model.util.FilterModel;
 import com.shapi.model.auth.Session;
+import com.requestsupport.responses.ApiResponse;
 import java.util.List;
 
-import rsc.data.Response;
+
 
 public interface GenericService<T, ID> {
 
     GenericService<T, ID> setSession(Session session);
 
-    Response<Boolean> create(T entity);
+    ApiResponse<Boolean> create(T entity);
 
-    Response<Boolean> update(T entity);
+    ApiResponse<Boolean> update(T entity);
 
-    Response<Boolean> delete(ID id);
+    ApiResponse<Boolean> delete(ID id);
 
-    Response<T> find(ID id);
+    ApiResponse<T> find(ID id);
 
-    Response<List<T>> findAll();
+    ApiResponse<List<T>> findAll();
 
-    Response<List<T>> findAllPaged(int page);
+    ApiResponse<List<T>> findAllPaged(int page);
 
-    Response<List<T>> filter(FilterModel filter, int page);
+    ApiResponse<List<T>> filter(FilterModel filter, int page);
 
 }

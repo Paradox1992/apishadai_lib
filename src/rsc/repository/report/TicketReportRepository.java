@@ -8,7 +8,7 @@ import com.shapi.model.User;
 import com.shapi.model.util.FilterModel;
 import java.util.List;
 import rsc.core.template.repository.GenericRepository;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 import rsc.service.report.TicketReportService;
 import rsc.util.TypeUtils;
 
@@ -19,38 +19,38 @@ public class TicketReportRepository extends GenericRepository<Ticket, Object> im
     }
 
     @Override
-    public Response<List<Customer>> filterCustomers(FilterModel model) {
+    public ApiResponse<List<Customer>> filterCustomers(FilterModel model) {
         
         return send(model, TypeUtils.listOf(Customer.class));
     }
 
     @Override
-    public Response<List<User>> filterUsuarios(FilterModel model) {
+    public ApiResponse<List<User>> filterUsuarios(FilterModel model) {
         return send(model, TypeUtils.listOf(User.class));
     }
 
     @Override
-    public Response<List<Stock>> filterStocks(FilterModel model) {
+    public ApiResponse<List<Stock>> filterStocks(FilterModel model) {
         return send(model, TypeUtils.listOf(Stock.class));
     }
 
     @Override
-    public Response<List<Promotion>> listRaffles( ) {
+    public ApiResponse<List<Promotion>> listRaffles( ) {
         return send(null, TypeUtils.listOf(Promotion.class));
     }
 
     @Override
-    public Response<List<Customer>> listCustomers( ) {
+    public ApiResponse<List<Customer>> listCustomers( ) {
         return send(null, TypeUtils.listOf(Customer.class));
     }
 
     @Override
-    public Response<List<Stock>> listStocks( ) {
+    public ApiResponse<List<Stock>> listStocks( ) {
         return send(null, TypeUtils.listOf(Stock.class));
     }
 
     @Override
-    public Response<List<User>> listUsuarios( ) {
+    public ApiResponse<List<User>> listUsuarios( ) {
         return send(null, TypeUtils.listOf(User.class));
     }
 

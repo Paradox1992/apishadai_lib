@@ -4,7 +4,7 @@ import com.shapi.model.AppModule;
 import com.shapi.model.AppModuleStatus;
 import java.util.List;
 import rsc.core.template.repository.GenericRepository;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 import rsc.service.config.AppModuleService;
 import rsc.util.TypeUtils;
 
@@ -15,7 +15,7 @@ public final class AppModuleRepository extends GenericRepository<AppModule, Obje
     }
     
     @Override
-    public Response<List<AppModuleStatus>> estadosList() {
+    public ApiResponse<List<AppModuleStatus>> estadosList() {
         return send(null, TypeUtils.listOf(AppModuleStatus.class));
     }
     

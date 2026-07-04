@@ -4,9 +4,9 @@ import com.shapi.model.AppModule;
 import com.shapi.model.AppModuleStatus;
 import java.util.List;
 import rsc.core.template.service.GenericService;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 
 public interface AppModuleService extends GenericService<AppModule, Object> {
 
-    Response<List<AppModuleStatus>> estadosList();
+    ApiResponse<List<AppModuleStatus>> estadosList();
 }

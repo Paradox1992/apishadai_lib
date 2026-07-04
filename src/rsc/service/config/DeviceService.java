@@ -5,13 +5,13 @@ import com.shapi.model.DeviceStatus;
 import com.shapi.model.Stock;
 import java.util.List;
 import rsc.core.template.service.GenericService;
-import rsc.data.Response;
+import com.requestsupport.responses.ApiResponse;
 
 
 public interface DeviceService extends GenericService<Device, Object> {
 
-    Response<List<DeviceStatus>> estadosList();
+    ApiResponse<List<DeviceStatus>> estadosList();
 
-    Response<List<Stock>> stocksList();
+    ApiResponse<List<Stock>> stocksList();
 
 }
