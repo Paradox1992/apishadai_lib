@@ -14,7 +14,7 @@ public class Proveedores {
     private String direccion;
     private String imagen;
     private OffsetDateTime created_at;
-    private OffsetDateTime updated;
+    private OffsetDateTime updated_at;
 
     public Proveedores() {
     }
@@ -31,14 +31,14 @@ public class Proveedores {
             @JsonProperty("direccion") String direccion,
             @JsonProperty("imagen") String imagen,
             @JsonProperty("created_at") OffsetDateTime created_at,
-            @JsonProperty("updated") OffsetDateTime updated) {
+            @JsonProperty("updated_at") OffsetDateTime updated_at) {
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
         this.direccion = direccion;
         this.imagen = imagen;
         this.created_at = created_at;
-        this.updated = updated;
+        this.updated_at = updated_at;
     }
 
 }
