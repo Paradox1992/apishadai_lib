@@ -40,6 +40,19 @@ public class GenericRepository<T, ID> implements GenericService<T, ID> {
         );
     }
 
+    public <R> ApiResponse<R> send(ButtonRoute buttonRoute, Object body, Type responseType, String idempotencyKey) {
+        Objects.requireNonNull(buttonRoute, "buttonRoute cannot be null");
+        Objects.requireNonNull(responseType, "responseType cannot be null");
+        return ApiHandler.getInstance().exec().send(
+                buttonRoute.getUrl(),
+                buttonRoute.getMethod(),
+                session,
+                body,
+                responseType,
+                idempotencyKey
+        );
+    }
+
     public <R> ApiResponse<R> send(ButtonRoute buttonRoute, Object body, Class<R> responseType) {
         Objects.requireNonNull(buttonRoute, "buttonRoute cannot be null");
         Objects.requireNonNull(responseType, "responseType cannot be null");
@@ -52,6 +65,19 @@ public class GenericRepository<T, ID> implements GenericService<T, ID> {
         );
     }
 
+    public <R> ApiResponse<R> send(ButtonRoute buttonRoute, Object body, Class<R> responseType, String idempotencyKey) {
+        Objects.requireNonNull(buttonRoute, "buttonRoute cannot be null");
+        Objects.requireNonNull(responseType, "responseType cannot be null");
+        return ApiHandler.getInstance().exec().send(
+                buttonRoute.getUrl(),
+                buttonRoute.getMethod(),
+                session,
+                body,
+                responseType,
+                idempotencyKey
+        );
+    }
+
     protected <R> ApiResponse<R> send(Object body, Type responseType) {
         var buttonRoute = RouteHelper.buildRoute(requireSession().getAccessibleContext());
         return ApiHandler.getInstance().exec().send(
@@ -60,6 +86,18 @@ public class GenericRepository<T, ID> implements GenericService<T, ID> {
                 session,
                 body,
                 responseType
+        );
+    }
+
+    protected <R> ApiResponse<R> send(Object body, Type responseType, String idempotencyKey) {
+        var buttonRoute = RouteHelper.buildRoute(requireSession().getAccessibleContext());
+        return ApiHandler.getInstance().exec().send(
+                buttonRoute.getUrl(),
+                buttonRoute.getMethod(),
+                session,
+                body,
+                responseType,
+                idempotencyKey
         );
     }
 

@@ -1,14 +1,14 @@
 package com.shapi.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.shapi.model.util.ActionButton;
 import java.util.Collections;
 import java.util.List;
 import javax.accessibility.AccessibleContext;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+
 public final class Session extends ActionButton {
 
     private final String token;

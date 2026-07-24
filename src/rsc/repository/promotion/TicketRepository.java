@@ -26,6 +26,11 @@ public final class TicketRepository extends GenericRepository<Ticket, Object> im
     }
 
     @Override
+    public ApiResponse<Base64File> generateTicket(Ticket tiket, String idempotencyKey) {
+        return send(tiket, Base64File.class, idempotencyKey);
+    }
+
+    @Override
     public ApiResponse<Boolean> create(Ticket entity) {
         return super.create(entity);
     }
@@ -46,8 +51,19 @@ public final class TicketRepository extends GenericRepository<Ticket, Object> im
     }
 
     @Override
+    public ApiResponse<Boolean> createCustomer(Customer cliente, String idempotencyKey) {
+        return send(cliente, Boolean.class, idempotencyKey);
+    }
+
+    @Override
     public ApiResponse<Boolean> updateCustomerPhone(Customer cliente) {
         return send(cliente, Boolean.class);
+
+    }
+
+    @Override
+    public ApiResponse<Boolean> updateCustomerPhone(Customer cliente, String idempotencyKey) {
+        return send(cliente, Boolean.class, idempotencyKey);
 
     }
 

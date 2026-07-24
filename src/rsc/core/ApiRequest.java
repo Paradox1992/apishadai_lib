@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.shapi.model.auth.Session;
 import com.requestsupport.responses.ApiResponse;
+import com.requestsupport.responses.PaginatedApiResponse;
 import org.apache.hc.client5.http.config.ConnectionConfig;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -27,17 +28,21 @@ import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import org.apache.commons.io.IOUtils;
 import rsc.util.OffsetDateTimeDeserializer;
+import rsc.util.IdempotencyKeyGenerator;
 import static rsc.util.UtilApi.UTL;
 
 public final class ApiRequest<T> implements rsc.service.api.RequestModel {
     
     private static final ObjectMapper OBJECT_MAPPER = createConfiguredObjectMapper();
     private static final String AUTH_PREFIX = "Bearer ";
+    private static final String IDEMPOTENCY_HEADER = "Idempotency-Key";
     private static final String JSON_CONTENT_TYPE = "application/json";
     private static final Timeout CONNECT_TIMEOUT = Timeout.ofSeconds(10);
     private static final Timeout RESPONSE_TIMEOUT = Timeout.ofSeconds(30);
+    private static final Set<String> IDEMPOTENT_METHOD_TARGETS = Set.of("POST", "PUT", "PATCH", "DELETE");
     
     private static ObjectMapper createConfiguredObjectMapper() {
         ObjectMapper mapper = new ObjectMapper();
@@ -50,17 +55,22 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
     
     @Override
     public <T> ApiResponse<T> send(String route, String method, Session session, Object body, Type responseType) {
+        return send(route, method, session, body, responseType, null);
+    }
+
+    @Override
+    public <T> ApiResponse<T> send(String route, String method, Session session, Object body, Type responseType, String idempotencyKey) {
         
         validateInputParameters(route, method, responseType);
         
         try (CloseableHttpClient httpClient = createHttpClient()) {
             DeviceInfo device = getDeviceInfo();
-            ClassicHttpRequest request = buildRequest(route, method, session, body, device);
+            ClassicHttpRequest request = buildRequest(route, method, session, body, device, idempotencyKey);
             
             return executeRequest(httpClient, request, responseType);
         } catch (IOException | RuntimeException e) {
             logError("ApiRequest::send - Error during request execution", e);
-            return errorResponse("Error ejecutando solicitud HTTP: " + e.getMessage(), -1);
+            return errorResponse("Error al ejecutar solicitud. " + null, -1);
         }
     }
     
@@ -99,7 +109,7 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
         return device;
     }
     
-    private ClassicHttpRequest buildRequest(String route, String method, Session session, Object body, DeviceInfo device) throws IOException {
+    private ClassicHttpRequest buildRequest(String route, String method, Session session, Object body, DeviceInfo device, String idempotencyKey) throws IOException {
         ClassicRequestBuilder requestBuilder = ClassicRequestBuilder.create(method)
                 .setUri(buildUri(route))
                 .addHeader("Accept", JSON_CONTENT_TYPE)
@@ -108,6 +118,7 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
                 .addHeader("App-Version", resolveAppVersion(session));
         
         addAuthorizationHeader(requestBuilder, session);
+        addIdempotencyHeader(requestBuilder, method, idempotencyKey);
         addRequestBody(requestBuilder, body);
         return requestBuilder.build();
     }
@@ -129,6 +140,29 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
             String requestBody = OBJECT_MAPPER.writeValueAsString(body);
             requestBuilder.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
         }
+    }
+
+    private void addIdempotencyHeader(ClassicRequestBuilder requestBuilder, String method, String idempotencyKey) {
+        String resolvedKey = resolveIdempotencyKey(method, idempotencyKey);
+        if (resolvedKey != null) {
+            requestBuilder.addHeader(IDEMPOTENCY_HEADER, resolvedKey);
+        }
+    }
+
+    private String resolveIdempotencyKey(String method, String idempotencyKey) {
+        if (!requiresIdempotencyKey(method)) {
+            return null;
+        }
+
+        if (idempotencyKey != null && !idempotencyKey.isBlank()) {
+            return idempotencyKey.trim();
+        }
+
+        return IdempotencyKeyGenerator.newKey();
+    }
+
+    private boolean requiresIdempotencyKey(String method) {
+        return method != null && IDEMPOTENT_METHOD_TARGETS.contains(method.toUpperCase());
     }
     
     private <T> ApiResponse<T> executeRequest(CloseableHttpClient httpClient, ClassicHttpRequest request, Type responseType) throws IOException {
@@ -176,7 +210,7 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
     private JavaType createListResponseType(TypeFactory typeFactory, ParameterizedType parameterizedType) {
         Type actualTypeArgument = parameterizedType.getActualTypeArguments()[0];
         JavaType listType = typeFactory.constructCollectionType(List.class, typeFactory.constructType(actualTypeArgument));
-        return typeFactory.constructParametricType(ApiResponse.class, listType);
+        return typeFactory.constructParametricType(PaginatedApiResponse.class, listType);
     }
     
     private JavaType createSimpleResponseType(TypeFactory typeFactory, Type responseType) {

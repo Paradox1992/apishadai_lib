@@ -15,13 +15,19 @@ public interface TicketService extends GenericService<Ticket, Object> {
 
     ApiResponse<Base64File> generateTicket(Ticket tiket);
 
+    ApiResponse<Base64File> generateTicket(Ticket tiket, String idempotencyKey);
+
     ApiResponse<List<Customer>> listCustomers();
 
     ApiResponse<List<Customer>> filterCustomers(FilterModel filter);
 
     ApiResponse<Boolean> createCustomer(Customer cliente);
 
+    ApiResponse<Boolean> createCustomer(Customer cliente, String idempotencyKey);
+
     ApiResponse<Boolean> updateCustomerPhone(Customer cliente);
+
+    ApiResponse<Boolean> updateCustomerPhone(Customer cliente, String idempotencyKey);
 
     ApiResponse<Boolean> isPhoneActive(int id);
 
