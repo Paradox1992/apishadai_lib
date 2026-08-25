@@ -15,6 +15,8 @@ public interface GenericService<T, ID> {
 
     ApiResponse<Boolean> update(T entity);
 
+    ApiResponse<Boolean> update(int id, T entity);
+
     ApiResponse<Boolean> delete(ID id);
 
     ApiResponse<T> find(ID id);

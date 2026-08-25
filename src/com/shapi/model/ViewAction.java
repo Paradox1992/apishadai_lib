@@ -1,11 +1,16 @@
 package com.shapi.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.OffsetDateTime;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ViewAction {
 
     private Integer id;
@@ -15,28 +20,9 @@ public class ViewAction {
     private OffsetDateTime created_at;
     private OffsetDateTime updated_at;
 
-    public ViewAction() {
-    }
-    
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public ViewAction(@JsonProperty("id") Integer id) {
+    public ViewAction(Integer id) {
         this.id = id;
-    }
-
-    
-    public ViewAction(
-            @JsonProperty("id") Integer id,
-            @JsonProperty("vista") View vista,
-            @JsonProperty("codigo") String codigo,
-            @JsonProperty("nombre") String nombre,
-            @JsonProperty("created_at") OffsetDateTime created_at,
-            @JsonProperty("updated_at") OffsetDateTime updated_at) {
-        this.id = id;
-        this.vista = vista;
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
     }
 
     @Override

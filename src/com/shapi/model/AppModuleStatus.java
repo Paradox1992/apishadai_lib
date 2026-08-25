@@ -1,12 +1,16 @@
 package com.shapi.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.OffsetDateTime;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AppModuleStatus {
 
     private Integer id;
@@ -14,22 +18,9 @@ public class AppModuleStatus {
     private OffsetDateTime created_at;
     private OffsetDateTime updated_at;
 
-    public AppModuleStatus() {
-    }
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public AppModuleStatus(@JsonProperty("id") Integer id) {
+    public AppModuleStatus(Integer id) {
         this.id = id;
-    }
-   
-    public AppModuleStatus(
-            @JsonProperty("id") Integer id,
-            @JsonProperty("descripcion") String descripcion,
-            @JsonProperty("created_at") OffsetDateTime created_at,
-            @JsonProperty("updated_at") OffsetDateTime updated_at) {
-        this.id = id;
-        this.descripcion = descripcion;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package rsc.service;
 
-import rsc.service.promotion.TicketService;
-import rsc.service.promotion.PromotionCatalogService;
+import rsc.service.sorteos.TicketService;
+import rsc.service.sorteos.PromotionCatalogService;
 import com.shapi.model.auth.Session;
 
 public interface RaffleService {

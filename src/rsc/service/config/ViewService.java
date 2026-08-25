@@ -6,6 +6,7 @@ import com.shapi.model.ViewStatus;
 import java.util.List;
 import rsc.core.template.service.GenericService;
 import com.requestsupport.responses.ApiResponse;
+import com.shapi.model.AppModule;
 
 public interface ViewService extends GenericService<View, String> {
 
@@ -16,5 +17,7 @@ public interface ViewService extends GenericService<View, String> {
     ApiResponse<Boolean> crearAccion(ViewAction accion);
 
     ApiResponse<Boolean> EliminarAccion(String id);
+
+    ApiResponse<List<AppModule>> modulos();
 
 }

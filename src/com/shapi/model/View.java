@@ -1,11 +1,17 @@
 package com.shapi.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.OffsetDateTime;
-import lombok.Data;
+import java.util.Objects;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class View {
 
     private Integer id;
@@ -16,34 +22,36 @@ public class View {
     private OffsetDateTime created_at;
     private OffsetDateTime updated_at;
 
-    public View() {
-    }
-
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public View(@JsonProperty("id") Integer id) {
+    public View(Integer id) {
         this.id = id;
-    }
-
-    public View(
-            @JsonProperty("id") Integer id,
-            @JsonProperty("modulo") AppModule modulo,
-            @JsonProperty("nombre") String nombre,
-            @JsonProperty("codigo") String codigo,
-            @JsonProperty("estado") ViewStatus estado,
-            @JsonProperty("created_at") OffsetDateTime created_at,
-            @JsonProperty("updated_at") OffsetDateTime updated_at) {
-        this.id = id;
-        this.modulo = modulo;
-        this.nombre = nombre;
-        this.codigo = codigo;
-        this.estado = estado;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
     }
 
     @Override
     public String toString() {
         return nombre;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final View other = (View) obj;
+        return Objects.equals(this.id, other.id);
     }
 
 }

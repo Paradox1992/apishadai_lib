@@ -6,4 +6,6 @@ import rsc.service.work.*;
 public interface WorkService {
 
     WorkShiftService workShiftService(Session session);
+
+    HorasLabService horasLabService(Session session);
 }

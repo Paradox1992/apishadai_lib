@@ -1,21 +1,21 @@
-package rsc.service.promotion;
+package rsc.service.sorteos;
 
 import com.shapi.model.Customer;
 import com.shapi.model.Department;
 import com.shapi.model.Municipality;
 import com.shapi.model.Promotion;
 import com.shapi.model.Ticket;
-import com.shapi.model.util.Base64File;
 import com.shapi.model.util.FilterModel;
 import java.util.List;
 import rsc.core.template.service.GenericService;
 import com.requestsupport.responses.ApiResponse;
+import com.shapi.model.TicketRequest;
 
 public interface TicketService extends GenericService<Ticket, Object> {
 
-    ApiResponse<Base64File> generateTicket(Ticket tiket);
+    ApiResponse<TicketRequest> generateTicket(Ticket tiket);
 
-    ApiResponse<Base64File> generateTicket(Ticket tiket, String idempotencyKey);
+    ApiResponse<TicketRequest> generateTicket(Ticket tiket, String idempotencyKey);
 
     ApiResponse<List<Customer>> listCustomers();
 

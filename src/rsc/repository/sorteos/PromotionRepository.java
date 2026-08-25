@@ -1,4 +1,4 @@
-package rsc.repository.promotion;
+package rsc.repository.sorteos;
 
 import com.shapi.model.PromotionStatus;
 import com.shapi.model.Promotion;
@@ -6,7 +6,7 @@ import com.shapi.model.util.FilterModel;
 import java.util.List;
 import rsc.core.template.repository.GenericRepository;
 import com.requestsupport.responses.ApiResponse;
-import rsc.service.promotion.PromotionCatalogService;
+import rsc.service.sorteos.PromotionCatalogService;
 import rsc.util.TypeUtils;
 
 public final class PromotionRepository extends GenericRepository<Promotion, Object> implements PromotionCatalogService {

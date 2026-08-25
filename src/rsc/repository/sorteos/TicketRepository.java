@@ -1,16 +1,16 @@
-package rsc.repository.promotion;
+package rsc.repository.sorteos;
 
 import com.shapi.model.Customer;
 import com.shapi.model.Department;
 import com.shapi.model.Municipality;
 import com.shapi.model.Promotion;
 import com.shapi.model.Ticket;
-import com.shapi.model.util.Base64File;
 import com.shapi.model.util.FilterModel;
 import java.util.List;
 import rsc.core.template.repository.GenericRepository;
 import com.requestsupport.responses.ApiResponse;
-import rsc.service.promotion.TicketService;
+import com.shapi.model.TicketRequest;
+import rsc.service.sorteos.TicketService;
 import rsc.util.TypeUtils;
 
 public final class TicketRepository extends GenericRepository<Ticket, Object> implements TicketService {
@@ -21,13 +21,13 @@ public final class TicketRepository extends GenericRepository<Ticket, Object> im
     }
 
     @Override
-    public ApiResponse<Base64File> generateTicket(Ticket tiket) {
-        return send(tiket, Base64File.class);
+    public ApiResponse<TicketRequest> generateTicket(Ticket tiket) {
+        return send(tiket, TicketRequest.class);
     }
 
     @Override
-    public ApiResponse<Base64File> generateTicket(Ticket tiket, String idempotencyKey) {
-        return send(tiket, Base64File.class, idempotencyKey);
+    public ApiResponse<TicketRequest> generateTicket(Ticket tiket, String idempotencyKey) {
+        return send(tiket, TicketRequest.class, idempotencyKey);
     }
 
     @Override

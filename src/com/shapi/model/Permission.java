@@ -1,11 +1,16 @@
 package com.shapi.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.OffsetDateTime;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Permission {
 
     private Integer id;
@@ -17,31 +22,9 @@ public class Permission {
     private OffsetDateTime created_at;
     private OffsetDateTime updated_at;
 
-    public Permission() {
-    }
-
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public Permission(@JsonProperty("id") Integer id) {
+    public Permission(Integer id) {
         this.id = id;
-    }
-
-    public Permission(
-            @JsonProperty("id") Integer id,
-            @JsonProperty("usuario") User usuario,
-            @JsonProperty("modulo") AppModule modulo,
-            @JsonProperty("vista") View vista,
-            @JsonProperty("actionvista") ViewAction actionvista,
-            @JsonProperty("tipo_tiempo") TimeType tipo_tiempo,
-            @JsonProperty("created_at") OffsetDateTime created_at,
-            @JsonProperty("updated_at") OffsetDateTime updated_at) {
-        this.id = id;
-        this.usuario = usuario;
-        this.modulo = modulo;
-        this.vista = vista;
-        this.actionvista = actionvista;
-        this.tipo_tiempo = tipo_tiempo;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
     }
 
     @Override

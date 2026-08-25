@@ -28,7 +28,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import org.apache.commons.io.IOUtils;
 import rsc.util.OffsetDateTimeDeserializer;
 import rsc.util.IdempotencyKeyGenerator;
@@ -42,7 +41,6 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
     private static final String JSON_CONTENT_TYPE = "application/json";
     private static final Timeout CONNECT_TIMEOUT = Timeout.ofSeconds(10);
     private static final Timeout RESPONSE_TIMEOUT = Timeout.ofSeconds(30);
-    private static final Set<String> IDEMPOTENT_METHOD_TARGETS = Set.of("POST", "PUT", "PATCH", "DELETE");
     
     private static ObjectMapper createConfiguredObjectMapper() {
         ObjectMapper mapper = new ObjectMapper();
@@ -149,7 +147,7 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
         }
     }
 
-    private String resolveIdempotencyKey(String method, String idempotencyKey) {
+    static String resolveIdempotencyKey(String method, String idempotencyKey) {
         if (!requiresIdempotencyKey(method)) {
             return null;
         }
@@ -161,8 +159,8 @@ public final class ApiRequest<T> implements rsc.service.api.RequestModel {
         return IdempotencyKeyGenerator.newKey();
     }
 
-    private boolean requiresIdempotencyKey(String method) {
-        return method != null && IDEMPOTENT_METHOD_TARGETS.contains(method.toUpperCase());
+    private static boolean requiresIdempotencyKey(String method) {
+        return "POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method);
     }
     
     private <T> ApiResponse<T> executeRequest(CloseableHttpClient httpClient, ClassicHttpRequest request, Type responseType) throws IOException {

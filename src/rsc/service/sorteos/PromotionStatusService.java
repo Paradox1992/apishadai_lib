@@ -1,4 +1,4 @@
-package rsc.service.promotion;
+package rsc.service.sorteos;
 
 import com.shapi.model.PromotionStatus;
 import rsc.core.template.service.GenericService;

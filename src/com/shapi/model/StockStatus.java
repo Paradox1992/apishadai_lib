@@ -1,11 +1,17 @@
 package com.shapi.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.OffsetDateTime;
-import lombok.Data;
+import java.util.Objects;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class StockStatus {
 
     private Integer id;
@@ -13,28 +19,30 @@ public class StockStatus {
     private OffsetDateTime created_at;
     private OffsetDateTime updated_at;
 
-    public StockStatus() {
-    }
-
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public StockStatus(@JsonProperty("id") Integer id) {
+    public StockStatus(Integer id) {
         this.id = id;
-    }
-
-    public StockStatus(
-            @JsonProperty("id") Integer id,
-            @JsonProperty("descripcion") String descripcion,
-            @JsonProperty("created_at") OffsetDateTime created_at,
-            @JsonProperty("updated_at") OffsetDateTime updated_at) {
-        this.id = id;
-        this.descripcion = descripcion;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
     }
 
     @Override
     public String toString() {
         return this.descripcion;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof StockStatus other)) {
+            return false;
+        }
+        return id != null && Objects.equals(id, other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
 }

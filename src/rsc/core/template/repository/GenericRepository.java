@@ -123,6 +123,11 @@ public class GenericRepository<T, ID> implements GenericService<T, ID> {
     }
 
     @Override
+    public ApiResponse<Boolean> update(int id, T entity) {
+        return send(RouteHelper.buildRoute(requireSession().getAccessibleContext(), id), entity, Boolean.class);
+    }
+
+    @Override
     public ApiResponse<Boolean> delete(ID id) {
         return send(RouteHelper.buildRoute(requireSession().getAccessibleContext(), id), null, Boolean.class);
     }

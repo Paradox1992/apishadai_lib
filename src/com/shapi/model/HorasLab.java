@@ -11,32 +11,32 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WorkShift {
+public class HorasLab {
 
     private Integer id;
     private User usuario;
-    private Device device;
-    private OffsetDateTime wkstart_time;
-    private OffsetDateTime wkend_time;
-    private OffsetDateTime lunch_start_time;
-    private OffsetDateTime lunch_end_time;
+    private Integer horas_lab;
+    private Integer horas_lunch;
     private OffsetDateTime created_at;
     private OffsetDateTime updated_at;
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public WorkShift(Integer id) {
+    public HorasLab(Integer id) {
         this.id = id;
     }
 
+    public HorasLab(Integer id, User usuario, Integer horas_lab, Integer horas_lunch, OffsetDateTime created_at, OffsetDateTime updated_at) {
+        this.id = id;
+        this.usuario = usuario;
+        this.horas_lab = horas_lab;
+        this.horas_lunch = horas_lunch;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
+    
+
     @Override
     public String toString() {
-        if (usuario != null) {
-            return usuario.toString();
-        }
-        if (device != null) {
-            return device.toString();
-        }
-        return id != null ? String.valueOf(id) : "";
+        return usuario != null ? usuario.toString() : "";
     }
-
 }

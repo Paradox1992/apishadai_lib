@@ -1,10 +1,10 @@
 package rsc.factory;
 
 import com.shapi.model.auth.Session;
-import rsc.repository.promotion.PromotionRepository;
-import rsc.repository.promotion.TicketRepository;
-import rsc.service.promotion.PromotionCatalogService;
-import rsc.service.promotion.TicketService;
+import rsc.repository.sorteos.PromotionRepository;
+import rsc.repository.sorteos.TicketRepository;
+import rsc.service.sorteos.PromotionCatalogService;
+import rsc.service.sorteos.TicketService;
 
 public final class RaffleFactory {
 
