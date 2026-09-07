@@ -20,13 +20,13 @@ public class TicketReportRepository extends GenericRepository<Ticket, Object> im
 
     @Override
     public ApiResponse<List<Customer>> filterCustomers(FilterModel model) {
-        
+
         return send(model, TypeUtils.listOf(Customer.class));
     }
 
     @Override
-    public ApiResponse<List<User>> filterUsuarios(FilterModel model) {
-        return send(model, TypeUtils.listOf(User.class));
+    public ApiResponse<List<User>> filterUsuarios() {
+        return send(null, TypeUtils.listOf(User.class));
     }
 
     @Override
@@ -35,23 +35,28 @@ public class TicketReportRepository extends GenericRepository<Ticket, Object> im
     }
 
     @Override
-    public ApiResponse<List<Promotion>> listRaffles( ) {
+    public ApiResponse<List<Promotion>> listRaffles() {
         return send(null, TypeUtils.listOf(Promotion.class));
     }
 
     @Override
-    public ApiResponse<List<Customer>> listCustomers( ) {
+    public ApiResponse<List<Customer>> listCustomers() {
         return send(null, TypeUtils.listOf(Customer.class));
     }
 
     @Override
-    public ApiResponse<List<Stock>> listStocks( ) {
+    public ApiResponse<List<Stock>> listStocks() {
         return send(null, TypeUtils.listOf(Stock.class));
     }
 
     @Override
-    public ApiResponse<List<User>> listUsuarios( ) {
+    public ApiResponse<List<User>> listUsuarios() {
         return send(null, TypeUtils.listOf(User.class));
+    }
+
+    @Override
+    public ApiResponse<List<Promotion>> filterRaffles(FilterModel model) {
+        return send(model, TypeUtils.listOf(Promotion.class));
     }
 
 }

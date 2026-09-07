@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.requestsupport.responses.ApiResponse;
 import com.requestsupport.responses.PaginatedApiResponse;
 import com.shapi.model.Farma.Proveedores;
+import com.shapi.model.util.ProveedorImageResponse.ImageData;
 import java.util.List;
 import org.junit.Test;
 
@@ -134,6 +135,31 @@ public class ModelDeserializationTest {
     }
 
     @Test
+    public void deserializesWorkLunchReportFields() throws Exception {
+        WorkShift report = mapper.readValue("""
+                {
+                    "id": 15,
+                    "work_date": "2026-09-01",
+                    "usuario": {"id": 7, "nombre": "Operador"},
+                    "device": {
+                        "id": 10,
+                        "displayname": "Caja 1",
+                        "stock": {"id": 3, "descripcion": "Sucursal Centro"}
+                    },
+                    "wkstart_time": "2026-09-01T08:00:00-06:00",
+                    "wkend_time": "2026-09-01T17:00:00-06:00",
+                    "lunch_start_time": "2026-09-01T12:00:00-06:00",
+                    "lunch_end_time": "2026-09-01T13:00:00-06:00"
+                }
+                """, WorkShift.class);
+
+        assertEquals(java.time.LocalDate.of(2026, 9, 1), report.getWork_date());
+        assertEquals("Sucursal Centro", report.getDevice().getStock().getDescripcion());
+        assertNotNull(report.getWkstart_time());
+        assertNotNull(report.getLunch_end_time());
+    }
+
+    @Test
     public void deserializesEntityListsAndIgnoresUnknownResponseFields() throws Exception {
         List<Device> devices = mapper.readValue("""
                 [
@@ -196,5 +222,23 @@ public class ModelDeserializationTest {
         assertEquals(2, paginated.getData().size());
         assertEquals(Integer.valueOf(10), paginated.getData().get(0).getId());
         assertEquals("Caja", paginated.getData().get(1).getDisplayname());
+    }
+
+    @Test
+    public void deserializesProveedorImageBase64Response() throws Exception {
+        JavaType responseType = mapper.getTypeFactory()
+                .constructParametricType(ApiResponse.class, ImageData.class);
+        ApiResponse<ImageData> response = mapper.readValue("""
+                {
+                    "message": "ok",
+                    "code": 200,
+                    "data": {
+                        "image": "aW1hZ2VuLWVuLWJhc2U2NA=="
+                    }
+                }
+                """, responseType);
+
+        assertNotNull(response.getData());
+        assertEquals("aW1hZ2VuLWVuLWJhc2U2NA==", response.getData().getImage());
     }
 }

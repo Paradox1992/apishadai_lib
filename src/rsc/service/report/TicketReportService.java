@@ -14,9 +14,11 @@ public interface TicketReportService extends GenericService<Ticket, Object> {
 
     ApiResponse<List<Customer>> filterCustomers(FilterModel model);
 
-    ApiResponse<List<User>> filterUsuarios(FilterModel model);
+    ApiResponse<List<User>> filterUsuarios();
 
     ApiResponse<List<Stock>> filterStocks(FilterModel model);
+
+    ApiResponse<List<Promotion>> filterRaffles(FilterModel model);
 
     ApiResponse<List<Promotion>> listRaffles();
 

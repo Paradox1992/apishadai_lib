@@ -2,6 +2,7 @@ package com.shapi.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.Setter;
 public class WorkShift {
 
     private Integer id;
+    private LocalDate work_date;
     private User usuario;
     private Device device;
     private OffsetDateTime wkstart_time;

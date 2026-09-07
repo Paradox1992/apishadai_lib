@@ -10,6 +10,7 @@ import rsc.service.WorkService;
 import rsc.service.client.CustomerService;
 import rsc.service.ReportService;
 import rsc.service.RaffleService;
+import rsc.service.UtilService;
 
 public interface ApiServices {
 
@@ -30,5 +31,7 @@ public interface ApiServices {
     ApiMetadataService metadataService();
     
     ReportService reportesService();
+    
+    UtilService utilService();
     
 }

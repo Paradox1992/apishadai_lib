@@ -10,17 +10,27 @@ public class FilterItem {
     @JsonProperty("value")
     private final Object value;
 
-    @JsonProperty("operator")
-    private final String operator;
-
-    @JsonProperty("logicalOperator")
-    private final String logicalOperator;
-
-    public FilterItem(String key, Object value, String operator, String logicalOperator) {
+    public FilterItem(String key, Object value) {
         this.key = key;
         this.value = value;
-        this.operator = operator;
-        this.logicalOperator = logicalOperator;
+    }
+
+    /**
+     * Compatibilidad temporal con clientes compilados contra el contrato
+     * anterior. El conector lógico ya no se serializa ni se envía a la API.
+     */
+    @Deprecated
+    public FilterItem(String key, Object value, String ignoredLogicalOperator) {
+        this(key, value);
+    }
+
+    /**
+     * Compatibilidad temporal con clientes compilados contra el contrato
+     * anterior. El operador SQL ya no se serializa ni se envía a la API.
+     */
+    @Deprecated
+    public FilterItem(String key, Object value, String ignoredOperator, String ignoredLogicalOperator) {
+        this(key, value);
     }
 
     /**
@@ -35,20 +45,6 @@ public class FilterItem {
      */
     public Object getValue() {
         return this.value;
-    }
-
-    /**
-     * @return the operator
-     */
-    public String getOperator() {
-        return this.operator;
-    }
-
-    /**
-     * @return the logicalOperator
-     */
-    public String getLogicalOperator() {
-        return this.logicalOperator;
     }
 
 }

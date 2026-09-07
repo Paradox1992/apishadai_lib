@@ -9,6 +9,7 @@ import rsc.repository.FarmaRepository;
 import rsc.repository.RaffleRepository;
 import rsc.repository.ReportRepository;
 import rsc.repository.LocationRepository;
+import rsc.repository.UtilRepository;
 import rsc.repository.WorkRepository;
 import rsc.service.ApiMetadataService;
 import rsc.service.AuthService;
@@ -20,6 +21,7 @@ import rsc.service.api.ApiServices;
 import rsc.service.client.CustomerService;
 import rsc.service.ReportService;
 import rsc.service.RaffleService;
+import rsc.service.UtilService;
 
 public final class ShApiClient implements ApiServices {
 
@@ -30,8 +32,9 @@ public final class ShApiClient implements ApiServices {
     private final RaffleService SORTEOS_SERVICE = new RaffleRepository();
     private final LocationService UBICACION_SERVICE = new LocationRepository();
     private final WorkService WORK_LUNCH_SERVICE = new WorkRepository();
-    private final ApiMetadataService UTIL_SERVICE = new ApiMetadataRepository();
+    private final ApiMetadataService META_SERVICE = new ApiMetadataRepository();
     private final ReportService REPORTES_SERVICE = new ReportRepository();
+    private final UtilService UTIL_SERVICE = new UtilRepository();
 
     private ShApiClient() {
     }
@@ -74,12 +77,17 @@ public final class ShApiClient implements ApiServices {
 
     @Override
     public ApiMetadataService metadataService() {
-        return this.UTIL_SERVICE;
+        return this.META_SERVICE;
     }
 
     @Override
     public ReportService reportesService() {
         return this.REPORTES_SERVICE;
+    }
+
+    @Override
+    public UtilService utilService() {
+        return this.UTIL_SERVICE;
     }
 
     private static class Holder {
