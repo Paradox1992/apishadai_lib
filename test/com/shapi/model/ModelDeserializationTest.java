@@ -6,6 +6,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.requestsupport.responses.ApiResponse;
 import com.requestsupport.responses.PaginatedApiResponse;
+import com.shapi.model.Farma.ProdUnidad;
+import com.shapi.model.Farma.ProdEstado;
+import com.shapi.model.Farma.ProdCategoria;
+import com.shapi.model.Farma.FamPresentacion;
+import com.shapi.model.Farma.FamAdministracion;
+import com.shapi.model.Farma.Familia;
+import com.shapi.model.Farma.Concentracion;
+import com.shapi.model.Farma.PrincipalActivo;
 import com.shapi.model.Farma.Proveedores;
 import com.shapi.model.util.ProveedorImageResponse.ImageData;
 import java.util.List;
@@ -34,6 +42,14 @@ public class ModelDeserializationTest {
                 Permission.class,
                 Promotion.class,
                 PromotionStatus.class,
+                ProdUnidad.class,
+                ProdEstado.class,
+                ProdCategoria.class,
+                FamPresentacion.class,
+                FamAdministracion.class,
+                Familia.class,
+                Concentracion.class,
+                PrincipalActivo.class,
                 Proveedores.class,
                 Role.class,
                 Stock.class,
